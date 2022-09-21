@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#ifdef _WIN32
+/* I fucking hate windows */
+#include <Windows.h>
+int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance,
+                    PSTR szCmdParam, int iCmdShow)
+{
+    main();
+}
+#elif defined(__unix__)
+#include <unistd.h>
+#include <signal.h>
+
+/* Self explanitory */
+void daemonize()
+{
+    /* I do not understand this code, and I pray I don't have to */
+    pid_t pid;
+    pid = fork();
+
+    if(pid < 0)
+        exit(1);
+    
+    if(setsid() < 0)
+        exit(0);
+
+    signal(SIGCHLD, SIG_IGN);
+    signal(SIGHUP, SIG_IGN);
+
+    pid = fork();
+
+    if (pid < 0)
+        exit(1);
+    if (pid > 0)
+        exit(0);
+    
+    umask(0);
+    chdir("/");
+    int x;
+    for (x = sysconf(_SC_OPEN_MAX); x>=0; x--)
+    {
+        close (x);
+    }
+}
+#endif
+
+int main()
+{
+    #ifdef __unix__
+    /* Daemonize this shit */
+    daemonize();
+    #endif
+}
