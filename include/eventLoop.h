@@ -2,6 +2,7 @@
 #define EVENTLOOP_H
 
 #include <stdio.h>
+#include <stdint.h>
 
 #ifdef _GNUC_
 #define NORETURN __attribute__((noreturn))
@@ -14,7 +15,7 @@ extern FILE *fscore;
 /* Score log. */
 extern FILE *scoreLog;
 /* Score. */
-extern int score;
+extern int32_t score;
 
 /* The file that governs over the scoring for the image. */
 extern FILE *guideFile;

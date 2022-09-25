@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdint.h>
 #include "include/eventLoop.h"
 
 /* Score file. */
@@ -6,7 +7,7 @@ FILE *fscore;
 /* Score log. */
 FILE *scoreLog;
 /* Score. */
-int score;
+int32_t score;
 
 /* The file that governs over the scoring for the image. */
 FILE *guideFile;

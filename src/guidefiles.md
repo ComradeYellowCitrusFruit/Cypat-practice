@@ -32,7 +32,7 @@ typedef struct
     *   0xB2 for FreeBSD
     */
     char OSCODE;
-    /* Operating system version numbers. */
+    /* Operating system version numbers, minimums, anyway. */
     uint16_t OS_majorVer;
     uint16_t OS_minorVer;
     uint16_t os_patch;
