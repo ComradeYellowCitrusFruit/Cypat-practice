@@ -79,7 +79,7 @@ typedef struct
     *   0xFE for initcondition
     */
     char typeCode;
-} COND_HEADER_T;
+} COND_Header_T;
 ```
 Conditions contain a main body as well, each varying based on the condition type.
 
@@ -93,7 +93,7 @@ typedef struct
     variable_t val;
     /* Variable code */
     uint16_t varCode;
-} COND_VAR_T;
+} COND_var_T;
 
 typedef struct
 {
@@ -102,7 +102,7 @@ typedef struct
     uint16_t varCount : 12;
     /* Not actual valid struct code, but whatever */
     COND_VAR_T vars[varCount];
-} COND_METACOND_T;
+} COND_Metacond_T;
 ```
 
 #### Initconditions
@@ -116,5 +116,5 @@ typedef struct
     uint16_t varCount : 12;
     /* Not actual valid struct code, but whatever */
     COND_VAR_T vars[varCount];
-} COND_INITCOND_T;
+} COND_Initcond_T;
 ```

@@ -2,6 +2,7 @@
 #define GUIDEFILES_H
 
 #include <stdint.h>
+#include <stdio.h>
 
 typedef struct
 {
@@ -46,5 +47,9 @@ typedef struct
     int32_t *score;
 } GF_STATE_T;
 
+extern GF_STATE_T gf_state;
+
+/* Initializes the guidefile state. */
+void initState(FILE *guidefile);
 
 #endif
