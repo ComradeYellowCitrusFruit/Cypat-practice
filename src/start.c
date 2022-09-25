@@ -1,20 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "include/eventLoop.h"
+#include "include/log.h"
 
 #ifdef _WIN32
 /* I fucking hate windows */
 #include <Windows.h>
+#define MAIN int Main()
 int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance,
                     PSTR szCmdParam, int iCmdShow)
 {
-    main();
+    Main();
 }
 #elif defined(__unix__)
 #include <unistd.h>
 #include <signal.h>
 
+#define MAIN int main()
+
 /* Self explanitory */
-void daemonize()
+static inline void daemonize()
 {
     /* I do not understand this code, and I pray I don't have to */
     pid_t pid;
@@ -46,10 +51,16 @@ void daemonize()
 }
 #endif
 
-int main()
+MAIN
 {
     #ifdef __unix__
     /* Daemonize this shit */
     daemonize();
     #endif
+    /* Start logging */
+    initLog();
+    /* Log this shit */
+    log("Process daemonized.");
+    /* And we are done here let's book it. */
+    enterLoop();
 }
