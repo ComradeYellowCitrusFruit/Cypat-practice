@@ -37,19 +37,21 @@ typedef struct
     /* IP/DNS to send the finished logs and score too, UTF-8 and ASCII only */
     char result_IPoDNS[255];
     /* Number of variables, primarily for metaconditions */
-    uint16_t varCount : 12;
+    uint16_t varCount;
 } GF_Header_t;
+
+typedef int32_t variable_t, var_t;
 
 typedef struct
 {
     GF_Header_t header;
-    int32_t *vars;
+    variable_t *vars;
     int32_t *score;
 } GF_STATE_T;
 
 extern GF_STATE_T gf_state;
 
 /* Initializes the guidefile state. */
-void initState(FILE *guidefile);
+void initState();
 
 #endif

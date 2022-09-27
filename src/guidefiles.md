@@ -43,7 +43,7 @@ typedef struct
     /* IP/DNS to send the finished logs and score too, UTF-8 and ASCII only */
     char result_IPoDNS[255];
     /* Number of variables, primarily for metaconditions */
-    uint16_t varCount : 12;
+    uint16_t varCount;
 } GF_Header_t;
 ```
 
@@ -99,9 +99,9 @@ typedef struct
 {
     int32_t scoreVal;
     /* Number of variables */
-    uint16_t varCount : 12;
+    uint16_t varCount;
     /* Not actual valid struct code, but whatever */
-    COND_VAR_T vars[varCount];
+    COND_var_T vars[varCount];
 } COND_Metacond_T;
 ```
 
@@ -113,8 +113,8 @@ Similar to metaconditions in structure, however they vastly different in functio
 typedef struct
 {
     /* Number of variables */
-    uint16_t varCount : 12;
+    uint16_t varCount;
     /* Not actual valid struct code, but whatever */
-    COND_VAR_T vars[varCount];
+    COND_var_T vars[varCount];
 } COND_Initcond_T;
 ```
