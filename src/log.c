@@ -74,9 +74,9 @@ void errLog(char *errMsg, int errCode, ...)
     trueErrMsg = malloc(vsnprintf(NULL, 0, errMsg, args));
     vsprintf(trueErrMsg, errMsg, args);
     printDate(logFile);
-    fprintf(logFile, "An error has occured. Error code = %d, errno = %d, Error message: %s \n", errCode, errno, trueErrMsg);
+    fprintf(logFile, "An error has occured. Error code = %d, errno = %zu, Error message: %s \n", errCode, (size_t)errno, trueErrMsg);
     printDate(errLogFile);
-    fprintf(errLogFile, "An error has occured. Error code = %d, errno = %d, Error message: %s \n", errCode, errno, trueErrMsg);
+    fprintf(errLogFile, "An error has occured. Error code = %d, errno = %zu, Error message: %s \n", errCode, (size_t)errno, trueErrMsg);
     va_end(args);
     return;
 }
