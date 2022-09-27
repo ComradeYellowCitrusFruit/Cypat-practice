@@ -47,9 +47,9 @@ typedef struct
     GF_Header_t header;
     variable_t *vars;
     int32_t *score;
-} GF_STATE_T;
+} GF_STATE_t;
 
-extern GF_STATE_T gf_state;
+extern GF_STATE_t gf_state;
 
 /* Initializes the guidefile state. */
 void initState();

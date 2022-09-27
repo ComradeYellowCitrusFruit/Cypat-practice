@@ -24,7 +24,6 @@ At some point we will need to make a program to write guidefiles.
 
 - A CPython compatible interpreter
 - A network connection and driver
-  - TCP
 - A read-write permanent filesystem and driver
 - Some method of obtaining a guidefile
 
@@ -37,7 +36,7 @@ At some point we will need to make a program to write guidefiles.
     2. Add in hashing of all the 100% critical files at the start of the program
     3. Add in checking hashes at the start of every run of the main loop
     4. Add in checks to see if log files have been deleted
-- Implement 0.05 second pauses at the end of the main loop to avoid excessive CPU consumption
+- Implement pauses at the end of the main loop to avoid excessive CPU consumption
 - Implement error checking
     1. `errno` and standard library errors
     2. Program errors

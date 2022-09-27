@@ -6,7 +6,7 @@
 #include "include/guidefile.h"
 #include "include/log.h"
 
-GF_STATE_T gf_state;
+GF_STATE_t gf_state;
 
 void initState()
 {

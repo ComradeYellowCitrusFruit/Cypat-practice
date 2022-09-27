@@ -22,7 +22,7 @@ typedef struct
     *   0xFE for initcondition
     */
     char typeCode;
-} COND_Header_T;
+} COND_Header_t;
 
 typedef struct
 {
@@ -30,20 +30,20 @@ typedef struct
     variable_t val;
     /* Variable code */
     uint16_t varCode;
-} COND_var_T;
+} COND_var_t;
 
 typedef struct
 {
     int32_t scoreVal;
     /* Number of variables */
     uint16_t varCount;
-} COND_Metacond_T;
+} COND_Metacond_t;
 
 typedef struct
 {
     /* Number of variables */
     uint16_t varCount;
-} COND_Initcond_T;
+} COND_Initcond_t;
 
 void runInitConds();
 
