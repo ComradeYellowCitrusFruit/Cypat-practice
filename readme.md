@@ -11,6 +11,23 @@ For each of these, it should contain an install script to make life easier for w
 In any and all cases, SHA-256 should be used for hashing, unless a reason for using MD5 instead is found, and is completely solid.
 At some point we will need to make a program to write guidefiles.
 
+## Prerequisites
+
+### Developing and compiling
+
+- A C compiler and standard library for your target platform
+- A CPython compatible interpreter or (preferably GNU) make
+- Text editor
+- Git and some internet connection
+
+### Installing and running
+
+- A CPython compatible interpreter
+- A network connection and driver
+  - TCP
+- A read-write permanent filesystem and driver
+- Some method of obtaining a guidefile
+
 ## TODOs and shit
 
 - Finish guidefile docs
@@ -21,6 +38,9 @@ At some point we will need to make a program to write guidefiles.
     3. Add in checking hashes at the start of every run of the main loop
     4. Add in checks to see if log files have been deleted
 - Implement 0.05 second pauses at the end of the main loop to avoid excessive CPU consumption
+- Implement error checking
+    1. `errno` and standard library errors
+    2. Program errors
 - Add in an exit proccess
     1. Trigger for the exit process
     2. Transmit logs to server specified in guidefile over TCP
