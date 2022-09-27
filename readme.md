@@ -32,14 +32,15 @@ At some point we will need to make a program to write guidefiles.
     2. Save the score
     3. Indicate sleep somewhere
     4. Shutdown the image
-- Finish init process
+- Finish start process
     1. Initalize logging
     2. Open necessary files
     3. Initalize gf_state
+    4. Detect if sleep has occurred
     - If it's the first time running
         1. Register 32 bit unique ID with the server specified in the guidefile
         2. Create ID file
-- Implement companion programs
+- Implement "companion programs"
     1. Guidefile creation program
     2. Score viewer
     3. Server program
