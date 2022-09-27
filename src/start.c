@@ -6,17 +6,19 @@
 #ifdef _WIN32
 /* I fucking hate windows */
 #include <Windows.h>
-#define MAIN int Main()
 int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance,
                     PSTR szCmdParam, int iCmdShow)
 {
-    Main();
+    /* Start logging */
+    initLog();
+    /* Log this shit */
+    log("Windows process started.");
+    /* And we are done here let's book it. */
+    enterLoop();
 }
 #elif defined(__unix__)
 #include <unistd.h>
 #include <signal.h>
-
-#define MAIN int main()
 
 /* Self explanitory */
 static inline void daemonize()
@@ -51,7 +53,7 @@ static inline void daemonize()
 }
 #endif
 
-MAIN
+int main()
 {
     #ifdef __unix__
     /* Daemonize this shit */
