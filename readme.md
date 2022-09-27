@@ -8,6 +8,7 @@ Basically, it sets up scoring for an preset up image using a system based on a s
 The program is going to be as efficent and fast as possible, running in the background at all times.
 It should be possible to compile with LLVM, GCC, and MSVC, with make, and python to automate the process. It will be primarily designed for Windows 11, Windows 10, Windows Server, Debian, Ubuntu, and their server varients primarily, with compatibility with Windows 7, Arch and it's derivatives, FreeBSD, OpenBSD, and various common Linux distros, thought the competion only uses Windows 10, Windows Server, Ubuntu, and CISCO (which I don't know shit about to be quite honest).
 For each of these, it should contain an install script to make life easier for whoever is designing an image.
+In any and all cases, SHA-256 should be used for hashing, unless a reason for using MD5 instead is found, and is completely solid.
 At some point we will need to make a program to write guidefiles.
 
 ## TODOs and shit
