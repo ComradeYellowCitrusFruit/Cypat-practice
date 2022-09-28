@@ -1,6 +1,8 @@
 #ifndef CONDITIONS_H
 #define CONDITIONS_H
 
+#include <stdint.h>
+#include <stdbool.h>
 #include "include/guidefile.h"
 
 typedef struct
@@ -34,9 +36,42 @@ typedef struct
 
 typedef struct
 {
-    int32_t scoreVal;
+    bool varOrScore;
+    union
+    {
+        struct
+        {
+            COND_var_t var;
+            /*  Effect to apply to var[varCode]
+            *   0xFF Set too
+            *   0x01 Add
+            *   0x02 Subtract
+            *   0x03 Multiply
+            *   0x04 Divide
+            *   0x10 Bitwise or
+            *   0x11 Bitwise and
+            *   0x12 Bitwise xor
+            *   0x13 Bitwise not
+            *   0x14 Bitwise lshift
+            *   0x15 Bitwise rshift
+            *   0x16 Bitwise nand
+            *   0x17 Bitwise nor
+            *   0x20 To the power of
+            *   0x21 To the root of
+            */
+            char effect;
+        }
+        int32_t score;
+    }
+} COND_effect_t;
+
+typedef struct
+{
+    COND_effect_t effect;
     /* Number of variables */
     uint16_t varCount;
+    /* Not actual valid struct code, but whatever */
+    COND_var_t vars[varCount];
 } COND_Metacond_t;
 
 typedef struct
@@ -44,6 +79,20 @@ typedef struct
     /* Number of variables */
     uint16_t varCount;
 } COND_Initcond_t;
+
+typedef struct
+{
+    /* Offset at which the name, a null terminated string, starts. */
+    int32_t nameOffset;
+    /* Are we checking the state, or existence? */
+    bool existsOrState;
+    /* File hash */
+    uint8_t hash[32];
+    /* Which triggers the outcome, exists or not? */
+    bool existsOrNot;
+    /* Effect */
+    COND_effect_t effect;
+} COND_fstate_t;
 
 void runInitConds();
 
