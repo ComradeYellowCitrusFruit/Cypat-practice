@@ -9,6 +9,7 @@ Guide files are files that define the scoring for each image. They follow a spec
 Each file starts with a header section, including data such as the number of conditions. \
 \
 The header can be described with the following struct:
+
 ```C
 typedef struct
 {
@@ -50,6 +51,7 @@ typedef struct
 ### Variables
 
 Variables are not baked into the guidefile, instead they are allocated by the program regulating the image. They are each 32 bit signed integers. They will be specified in code with the following typedef:
+
 ```C
 typedef int32_t variable_t, var_t;
 ```
@@ -59,6 +61,7 @@ typedef int32_t variable_t, var_t;
 Conditions are the main portion of a guide file, and easily the most complex. They determine the way the scoring will behave on an image. \
  \
 Conditions start with a small header described with the following struct:
+
 ```C
 typedef struct
 {
@@ -82,11 +85,13 @@ typedef struct
     char typeCode;
 } COND_Header_t;
 ```
+
 Conditions contain a main body as well, each varying based on the condition type.
 
 #### Metaconditions
 
 Perhaps the simplest form of condition. It simply is based on the state of a certain variable, or variables. Each metacondition can be described with the following structs:
+
 ```C
 typedef struct
 {
@@ -154,6 +159,7 @@ typedef struct
 #### File exists/state condition
 
 These conditions are more complex in nature, however, they are far more useful than initconditions and metaconditions. File state is, for the time being, simply another word for hash. File state conditions can be represented with the following struct:
+
 ```C
 typedef struct
 {
