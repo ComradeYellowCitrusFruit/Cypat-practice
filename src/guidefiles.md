@@ -21,6 +21,12 @@ typedef struct
     uint16_t minorVer;
     /* Patch number*/
     uint16_t patch;
+    /*  Code for alpha, beta, or release version
+    *   0xA for Alpha
+    *   0xB for Beta
+    *   0xF for Release
+    */
+    uint8_t alphaCode;
     /*  Code for the operating system for the file.
     *   0x01 for Windows
     *   0x10 for Windows Server

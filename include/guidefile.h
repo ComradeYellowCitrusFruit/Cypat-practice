@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <stdio.h>
+#include <stdbool.h>
 
 typedef struct
 {
@@ -14,6 +15,12 @@ typedef struct
     uint16_t minorVer;
     /* Patch number*/
     uint16_t patch;
+    /*  Code for alpha, beta, or release version
+    *   0xA for Alpha
+    *   0xB for Beta
+    *   0xF for Release
+    */
+    uint8_t alphaCode;
     /*  Code for the operating system for the file.
     *   0x01 for Windows
     *   0x10 for Windows Server
@@ -34,12 +41,13 @@ typedef struct
     uint16_t conditionCount;
     /* Time for timer in minutes, 0 or -1 will yield no timer. */
     int32_t time;
-    /* IP/DNS to send the finished logs and score too, UTF-8 and ASCII only */
-    char result_IPoDNS[255];
+    /* IPv4 or IPv6 */
+    bool IPv4;
+    /* IP of server to connect to, IP should be in utf-8 or ascii, null terminating, port is 44252. */
+    char serverIP[255];
     /* Number of variables, primarily for metaconditions */
     uint16_t varCount;
 } GF_Header_t;
-
 typedef int32_t variable_t, var_t;
 
 typedef struct
