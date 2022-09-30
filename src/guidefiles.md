@@ -41,8 +41,10 @@ typedef struct
     uint16_t conditionCount;
     /* Time for timer in minutes, 0 or -1 will yield no timer. */
     int32_t time;
-    /* IP/DNS to send the finished logs and score too, UTF-8 and ASCII only */
-    char result_IPoDNS[255];
+    /* IPv4 or IPv6 */
+    bool IPv4;
+    /* IP of server to connect to, IP should be in utf-8 or ascii, null terminating, port is 44252. */
+    char serverIP[255];
     /* Number of variables, primarily for metaconditions */
     uint16_t varCount;
 } GF_Header_t;
