@@ -60,9 +60,9 @@ typedef struct
             *   0x21 To the root of
             */
             char effect;
-        }
+        };
         int32_t score;
-    }
+    };
 } COND_effect_t;
 
 typedef struct
@@ -70,8 +70,6 @@ typedef struct
     COND_effect_t effect;
     /* Number of variables */
     uint16_t varCount;
-    /* Not actual valid struct code, but whatever */
-    COND_var_t vars[varCount];
 } COND_Metacond_t;
 
 typedef struct
