@@ -8,7 +8,11 @@
 typedef struct
 {
     /* Condition start offset */
-    int32_t offset;
+    uint32_t offset;
+    /* Footer offset */
+    uint32_t foffset;
+    /* File size */
+    uint32_t size;
     /* Major version number */
     uint16_t majorVer;
     /* Minor version number */
@@ -28,7 +32,7 @@ typedef struct
     *   0x20 for Ubuntu Server
     *   0x03 for Debian
     *   0x04 for Kali Linux
-    *   ox05 for another Linux distribution
+    *   0x05 for another Linux distribution
     *   0xB1 for OpenBSD
     *   0xB2 for FreeBSD
     */
@@ -40,14 +44,29 @@ typedef struct
     /* Number of conditions */
     uint16_t conditionCount;
     /* Time for timer in minutes, 0 or -1 will yield no timer. */
-    int32_t time;
+    uint32_t time;
     /* IPv4 or IPv6 */
     bool IPv4;
     /* IP of server to connect to, IP should be in utf-8 or ascii, null terminating, port is 44252. */
     char serverIP[255];
     /* Number of variables, primarily for metaconditions */
     uint16_t varCount;
+    /* Guidefile hash, to confirm validity. */
+    uint8_t hash[32];
 } GF_Header_t;
+
+typedef struct
+{
+    /* Condition start offset */
+    uint32_t offset;
+    /* Header offset */
+    uint32_t hoffset;
+    /* File size */
+    uint32_t size;
+    /* Guidefile hash, to confirm validity. */
+    uint8_t hash[32];
+} GF_Footer_t;
+
 typedef int32_t variable_t, var_t;
 
 typedef struct
