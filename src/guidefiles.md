@@ -14,7 +14,11 @@ The header can be described with the following struct:
 typedef struct
 {
     /* Condition start offset */
-    int32_t offset;
+    uint32_t offset;
+    /* Footer offset */
+    uint32_t foffset;
+    /* File size */
+    uint32_t size;
     /* Major version number */
     uint16_t majorVer;
     /* Minor version number */
@@ -34,7 +38,7 @@ typedef struct
     *   0x20 for Ubuntu Server
     *   0x03 for Debian
     *   0x04 for Kali Linux
-    *   ox05 for another Linux distribution
+    *   0x05 for another Linux distribution
     *   0xB1 for OpenBSD
     *   0xB2 for FreeBSD
     */
@@ -46,14 +50,34 @@ typedef struct
     /* Number of conditions */
     uint16_t conditionCount;
     /* Time for timer in minutes, 0 or -1 will yield no timer. */
-    int32_t time;
+    uint32_t time;
     /* IPv4 or IPv6 */
     bool IPv4;
     /* IP of server to connect to, IP should be in utf-8 or ascii, null terminating, port is 44252. */
     char serverIP[255];
     /* Number of variables, primarily for metaconditions */
     uint16_t varCount;
+    /* Guidefile hash, to confirm validity. */
+    uint8_t hash[32];
 } GF_Header_t;
+```
+
+### Footer
+
+Each guidefile ends with a footer, put in place for validation purposes. They can be represented with the following struct:
+
+```C
+typedef struct
+{
+    /* Condition start offset */
+    uint32_t offset;
+    /* Header offset */
+    uint32_t hoffset;
+    /* File size */
+    uint32_t size;
+    /* Guidefile hash, to confirm validity. */
+    uint8_t hash[32];
+} GF_Footer_t;
 ```
 
 ### Variables
@@ -74,11 +98,11 @@ Conditions start with a small header described with the following struct:
 typedef struct
 {
     /* Offset to next condition */
-    int nextOffset;
+    uint32_t nextOffset;
     /* Size of condition in bytes */
-    int condSize;
+    uint32_t condSize;
     /* Offset to prev. condition */
-    int prevOffset;
+    uint32_t prevOffset;
     /*  Code for the type of condition
     *   0x00 for file exists
     *   0x01 for directory exists
@@ -172,7 +196,7 @@ These conditions are more complex in nature, however, they are far more useful t
 typedef struct
 {
     /* Offset at which the name, a null terminated string, starts. */
-    int32_t nameOffset;
+    uint32_t nameOffset;
     /* Are we checking the state, or existence? */
     bool existsOrState;
     /* File hash */

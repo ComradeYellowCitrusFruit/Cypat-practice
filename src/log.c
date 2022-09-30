@@ -10,6 +10,8 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdarg.h>
+#include <stdint.h>
+#include <inttypes.h>
 #include "include/log.h"
 
 FILE *logFile;
@@ -66,7 +68,7 @@ void log(char *msg, ...)
     va_end(args);
     return;
 }
-void errLog(char *errMsg, int errCode, ...)
+void errLog(char *errMsg, int32_t errCode, ...)
 {
     char *trueErrMsg;
     va_list args;
@@ -74,7 +76,7 @@ void errLog(char *errMsg, int errCode, ...)
     trueErrMsg = malloc(vsnprintf(NULL, 0, errMsg, args));
     vsprintf(trueErrMsg, errMsg, args);
     printDate(logFile);
-    fprintf(logFile, "An error has occured. Error code = %d, errno = %zu, Error message: %s \n", errCode, (size_t)errno, trueErrMsg);
+    fprintf(logFile, "An error has occured. Error code = %"PRId32", errno = %zu, Error message: %s \n", errCode, (size_t)errno, trueErrMsg);
     printDate(errLogFile);
     fprintf(errLogFile, "An error has occured. Error code = %d, errno = %zu, Error message: %s \n", errCode, (size_t)errno, trueErrMsg);
     va_end(args);
