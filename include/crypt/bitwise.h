@@ -28,7 +28,7 @@ static uint32_t rotl32(uint32_t rot, uint32_t by)
     return (rot << by) | (rot >> (32 - by));
 }
 
-static uint64_t rotr32(uint32_t rot, uint32_t by)
+static uint32_t rotr32(uint32_t rot, uint32_t by)
 {
     return (rot >> by) | (rot << (32 - by));
 }
