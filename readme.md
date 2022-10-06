@@ -77,3 +77,13 @@ At some point we will need to make a program to write guidefiles.
         3. FreeBSD/OpenBSD
         4. Misc. Linux distros
 - Create detailed score logging
+- Create proper network capabilities
+    1. Client
+    2. Server for later
+    3. Eliptic Curve Diffie-Hellman for session key creation and exchange.
+- Implement proper cryptography
+    1. SHA256 for hashing.
+    2. Eliptic Curve Diffie-Hellman for session key creation and exchange.
+    3. AES for encryption.
+    4. ChaCha as a possible alternative for AES
+    5. MD5 incase we ever need quick, not completely secure hashing, most likely for network purposes.
