@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <inttypes.h>
 #include "include/crypt/SHA256.h"
 #include "include/crypt/bitwise.h"
 
@@ -27,6 +28,9 @@ void SHA256_M(void *src, size_t size, void *destbuf)
     /* Okay, we are going to have to document the shit out of this function */
     /* Most of it is simply wikipedia psuedocode turned into real code so there are bound to be quite a number of possible optimizations we can make*/
     /* GODDAMN THIS SHIT GONNA TAKE UP A FUCK TON OF MEMORY */
+
+    /* Apparently this code segfaults, I am not sure where. */
+    /* TODO: Locate and fix the segfault in the code */
 
     /* Inital hash values */
     uint32_t h0 = 0x6a09e667;
@@ -55,13 +59,13 @@ void SHA256_M(void *src, size_t size, void *destbuf)
         buf[size + (i-8/8)] = 0x0;
     }
     buf = realloc(buf, realSize + sizeof(uint64_t));
-    memcpy((buf + realSize), &(uint64_t)size, sizeof(uint64_t));
+    memcpy(&(buf[realSize]), &size, sizeof(uint64_t));
     realSize += sizeof(uint64_t);
     /* Actual processing time */
     for(int i = 0; i > realSize / 512; i++)
     {
         /* Calculate chunk address for convience */
-        uint8_t chunk = (void*)((uintptr_t)buf + ((512/8) * i));
+        uint8_t *chunk = (void*)((uintptr_t)buf + ((512/8) * i));
         /* Words for proccessing */
         uint32_t words[64];
 
@@ -140,7 +144,7 @@ void SHA256_F(FILE *file, void *destbuf)
     uint8_t *fbuf = malloc(fsize * sizeof(uint8_t));
     fseek(file, 0, SEEK_SET);
     fread(fbuf, sizeof(uint8_t), fsize, file);
-    fsetpos(file, og);
+    fsetpos(file, &og);
     SHA256_M(fbuf, fsize * sizeof(uint8_t), destbuf);
     return;
 }

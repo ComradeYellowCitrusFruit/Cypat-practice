@@ -3,12 +3,12 @@
 
 #include <stdint.H>
 
-static uint16_t rotl8(uint8_t rot, uint8_t by)
+static uint8_t rotl8(uint8_t rot, uint8_t by)
 {
     return (rot << by) | (rot >> (16 - by));
 }
 
-static uint16_t rotr8(uint8_t rot, uint8_t by)
+static uint8_t rotr8(uint8_t rot, uint8_t by)
 {
     return (rot >> by) | (rot << (8 - by));
 }
