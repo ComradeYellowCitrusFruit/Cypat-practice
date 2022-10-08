@@ -56,7 +56,7 @@ At some point we will need to make a program to write guidefiles.
     2. Open necessary files
     3. Initalize gf_state
     4. Detect if sleep has occurred
-    - If it's the first time running
+  - If it's the first time running
         1. Register 32 bit unique ID with the server specified in the guidefile
         2. Create ID file
 - Implement "companion programs"
@@ -71,7 +71,7 @@ At some point we will need to make a program to write guidefiles.
     2. Windows Server
     3. Ubuntu
     4. Debian
-    - Low priority OSes
+  - Low priority OSes
         1. Arch and Arch-based
         2. Windows 7
         3. FreeBSD/OpenBSD
@@ -84,6 +84,7 @@ At some point we will need to make a program to write guidefiles.
 - Implement proper cryptography
     1. SHA256 for hashing.
     2. Diffie-Hellman for session key creation and exchange.
+       - Later on it may be benefitional to switch to ECDH, however regular Diffie-Hellman will suffice
     3. AES for encryption.
     4. ChaCha as a possible alternative for AES
     5. MD5 incase we ever need quick, not completely secure hashing, most likely for network purposes.
