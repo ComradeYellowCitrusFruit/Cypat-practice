@@ -1,6 +1,6 @@
 # A Simple homemade, homegrown practice program for the Cyberpatriots compettion
 
-Title says it all really. Since I am starting cypat at my school, I decided fuck it, "Why not make my own practice software I could possibly use as my own version of cypat later on?", and so here we are, writing it.
+Title says it all really. Since I am starting cypat at my school, I decided fuck it, "Why not make my own practice software I could possibly use as my own version of cypat later on?", and so here we are, writing it. Let's just pray copyright isn't an issue for us.
 
 ## Description of function
 
