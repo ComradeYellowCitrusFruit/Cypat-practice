@@ -15,8 +15,8 @@
 #define DH_MODULUS_BITS 2048
 #define DH_EXPONENT_BITS 512
 
-/* RFC 2048 bit prime number as a uint32_t array */
-C uint32_t RFC_prime[64];
+/* RFC 2048 bit prime number as a uint32_t array, unnecessary for now. */
+/* C uint32_t RFC_prime[64]; */
 
 /* RFC 2048 bit prime number as a base62 string, for use with GMP */
 C char RFC_prime_b62str[345];

@@ -7,7 +7,8 @@
 /* Since this header automatically handles extern "c" for function declarations, it is safe to not use extern "C" on this header */
 #include "include/crypt/DH.h"
 
-/* RFC 2048 bit prime number as a uint32_t array */
+/* RFC 2048 bit prime number as a uint32_t array, unnecessary for now. */
+/*
 C uint32_t RFC_prime[] =
 {
     0xFFFFFFFF, 0xFFFFFFFF, 0xC90FDAA2, 0x2168C234, 0xC4C6628B, 
@@ -24,6 +25,7 @@ C uint32_t RFC_prime[] =
     0x95581718, 0x3995497C, 0xEA956AE5, 0x15D22618, 0x98FA0510,
     0x15728E5A, 0x8AACAA68, 0xFFFFFFFF, 0xFFFFFFFF
 };
+*/
 
 /* RFC 2048 bit prime number as a base62 string, for use with GMP */
 C char RFC_prime_b62str[] = "qMvq04wETHykwmBW2FBQZolzOg0jEuUURFM0SIJHKIV1icTUizH1bu9Lm9I0O2q0tr4wEPdNXkBkdIJtgCjJbiAyG9xQEHtxAYd4hoKRPGMxcnM0cfCE1spSNc4RuOFkgUURKGw3bIPLnmdTLb3lAvg8sOdFoXhsk6wwyzcPhFGbm7VypgXXbFH8F7tELKXQv99iQQpVHvDotGCO2rNCBBJkyL7GbtKAWbWKoGeNQwyeOLN2LPEvpAUrJZrSoZEOuRffqcCbhV1UBM9JZbOTvvw2936n5RJY69rqOqcuQ3yXy4lmKGwD6E2aEQdpgNva2MqmrkxlLqS2b38LXyEcVrX5";
