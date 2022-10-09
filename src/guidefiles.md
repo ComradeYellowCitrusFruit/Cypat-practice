@@ -190,7 +190,7 @@ typedef struct
 
 #### File exists/state condition
 
-These conditions are more complex in nature, however, they are far more useful than initconditions and metaconditions. File state is, for the time being, simply another word for hash. File state conditions can be represented with the following struct:
+These conditions are more complex in nature, however, they are far more useful than initconditions and metaconditions. File state is, for the time being, simply another word for hash. Forensics conditions are simply another phrase for these. File state conditions can be represented with the following struct:
 
 ```C
 typedef struct
@@ -206,4 +206,20 @@ typedef struct
     /* Effect */
     COND_effect_t effect;
 } COND_fstate_t;
+```
+
+#### Command result condition
+
+Command result conditions are exactly like file state conditions, except with a change of struct member names. Command result conditions can be represented with the following struct:
+
+```C
+typedef struct
+{
+    /* Offset at which the command, a null terminated string, starts. */
+    uint32_t commandOffset;
+    /* Result hash */
+    uint8_t hash[32];
+    /* Effect */
+    COND_effect_t effect;
+} COND_cresult_t;
 ```

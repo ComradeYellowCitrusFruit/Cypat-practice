@@ -6,7 +6,7 @@
 
 /* Since this header automatically handles extern "c" for function declarations, it is safe to not use extern "C" on this header */
 #include "include/crypt/DH.h"
-extern "C"
+C
 {
     #include "include/crypt/rand.h"
 }
