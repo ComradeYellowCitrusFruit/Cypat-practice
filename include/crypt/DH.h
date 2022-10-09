@@ -26,7 +26,7 @@ C char RFC_prime_b62str[345];
 /* Initiate Diffie-Hellman shit */
 C void initDH();
 
-/*  Get a pointer to a valid GMP++ class, don't fuck with these */
+/*  Get a pointer to a valid GMP++ class allocated with malloc, don't fuck with these */
 C void *getPtr();
 
 /* Generate a valid secret int */
