@@ -11,6 +11,9 @@ For each of these, it should contain an install script to make life easier for w
 In any and all cases, SHA-256 should be used for hashing, unless a reason for using MD5 instead is found, and is completely solid.
 At some point we will need to make a program to write guidefiles.
 
+At the moment, MSVC compatibility has been effectively removed for the time being because we are using GMP for our Diffie-Hellman implementation.
+We will have to get ourselves an alternative for GMP for use with MSVC or cut out MSVC entirely, however with the recently written makefile, it would be easier to cut out MSVC.
+
 ## Prerequisites
 
 ### Developing and compiling

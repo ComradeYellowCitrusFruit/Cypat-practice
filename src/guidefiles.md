@@ -264,3 +264,4 @@ typedef struct
     /* Effect */
     COND_effect_t effect;
 }
+```
