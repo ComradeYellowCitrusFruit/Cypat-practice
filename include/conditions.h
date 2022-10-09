@@ -92,6 +92,42 @@ typedef struct
     COND_effect_t effect;
 } COND_fstate_t;
 
+typedef struct
+{
+    /* Offset at which the command, a null terminated string, starts. */
+    uint32_t commandOffset;
+    /* Result hash */
+    uint8_t hash[32];
+    /* Effect */
+    COND_effect_t effect;
+} COND_cresult_t;
+
+typedef struct
+{
+    /* Result hash */
+    uint8_t hash[32];
+    /* Effect */
+    COND_effect_t effect;
+} COND_OSVER_t;
+
+typedef struct
+{
+    /* Offset to the setting string*/
+    uint32_t settingOffset;
+    /* Offset to the file name string*/
+    uint32_t fnameOffset;
+    /* Effect */
+    COND_effect_t effect;
+} COND_SETTING_t;
+
+typedef struct
+{
+    /* Offset to the app. string */
+    uint32_t appOffset;
+    /* Effect */
+    COND_effect_t effect;
+} COND_APPINSTALL_t;
+
 void runInitConds();
 
 #endif

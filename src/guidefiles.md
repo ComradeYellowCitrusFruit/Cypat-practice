@@ -263,5 +263,5 @@ typedef struct
     uint32_t appOffset;
     /* Effect */
     COND_effect_t effect;
-}
+} COND_APPINSTALL_t;
 ```
