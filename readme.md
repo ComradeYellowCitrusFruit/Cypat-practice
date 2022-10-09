@@ -69,9 +69,9 @@ At some point we will need to make a program to write guidefiles.
 - Create install scripts written in Python for cross compatibility
     1. Windows 11/10
     2. Windows Server
-    3. Ubuntu
-    4. Debian
-  - Low priority OSes
+    3. Ubuntu and Ubuntu based
+    4. Debian and Debian based
+    5. Low priority OSes
         1. Arch and Arch-based
         2. Windows 7
         3. FreeBSD/OpenBSD
