@@ -223,3 +223,44 @@ typedef struct
     COND_effect_t effect;
 } COND_cresult_t;
 ```
+
+#### Operating system version condition
+
+Operating system versions work differently on different operating systems. On Linux they work checking the kernel version, using `uname -srm > /tmp/CYPAT_COND` then checking the hash of /tmp/CYPAT_COND, if you need the version of the exact linux based operating system and not the kernel, you can use fstate conditions on the appropriate files. On Windows, they check for the operating system version using `systeminfo > C:/tmp/CYPAT_OSVER; grep "OS Version:" C:/tmp/CYPAT_OSVER > C:/tmp/CYPAT_COND` then checking the hash of C:/tmp/CYPAT_COND. They can be represented with the following struct:
+
+```C
+typedef struct
+{
+    /* Result hash */
+    uint8_t hash[32];
+    /* Effect */
+    COND_effect_t effect;
+} COND_OSVER_t;
+```
+
+#### Setting enabled condition
+
+These conditions are meant to work based on OS settings, however, the name is a misnomer. They simply search for a string in a file. They can be represented with the following struct:
+```C
+typedef struct
+{
+    /* Offset to the setting string*/
+    uint32_t settingOffset;
+    /* Offset to the file name string*/
+    uint32_t fnameOffset;
+    /* Effect */
+    COND_effect_t effect;
+} COND_SETTING_t;
+```
+
+#### App. installed
+
+Similarly to setting conditions, the name is a misnomer, they really check if a package is installed, on Linux and BSD anyway. However, on Windows, they do infact check if an app. is installed. They can be represented with the following struct:
+```C
+typedef struct
+{
+    /* Offset to the app. string */
+    uint32_t appOffset;
+    /* Effect */
+    COND_effect_t effect;
+}
