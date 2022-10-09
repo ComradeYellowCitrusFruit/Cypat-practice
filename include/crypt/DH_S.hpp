@@ -7,7 +7,9 @@
 
 /* A header file for Diffie-Hellman internal functions. */
 
-/* A simple union to allow us to access the inner structure of an mpz_class, in case we ever need to, perhaps to transmit it over the network. */
+/*  A simple union to allow us to use an mpz_class as an mpz_t.
+*   This works because an mpz_class is equal in memory to an mpz_t. 
+*/
 union MPZ
 {
     /* Class version */
