@@ -45,6 +45,7 @@ void runCresult(COND_cresult_t *cond)
     char *cmd = malloc(strlen((void*)((uintptr_t)cond + cond->commandOffset)) + sizeof(COMMAND_APPEND));
     strcpy(cmd, (void*)((uintptr_t)cond + cond->commandOffset));
     strcat(cmd, COMMAND_APPEND);
+    log("Running command \"%s\"", cmd);
     system(cmd);
     FILE *res = fopen(COND_TEMP_FILE_NAME, "r");
     uint8_t cres[32];
@@ -58,6 +59,7 @@ void runCresult(COND_cresult_t *cond)
 void runOSVER(COND_OSVER_t *cond)
 {
     FILE *file = fopen(COND_TEMP_FILE_NAME, "r");
+    log("Checking OS version with command \"%s\"", OSVER_COMMAND);
     system(OSVER_COMMAND);
     uint8_t hash[32];
     SHA256_F(file, hash);
