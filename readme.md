@@ -60,7 +60,7 @@ We will have to get ourselves an alternative for GMP for use with MSVC or cut ou
     2. Open necessary files
     3. Initalize gf_state
     4. Detect if sleep has occurred
-  - If it's the first time running
+    5. If it's the first time running
         1. Register 32 bit unique ID with the server specified in the guidefile
         2. Create ID file
 - Implement "companion programs"
