@@ -227,7 +227,7 @@ typedef struct
 
 #### Operating system version condition
 
-Operating system versions work differently on different operating systems. On Linux they work checking the kernel version, using `uname -srm > /tmp/CYPAT_COND` then checking the hash of /tmp/CYPAT_COND, if you need the version of the exact linux based operating system and not the kernel, you can use fstate conditions on the appropriate files. On Windows, they check for the operating system version using `systeminfo > C:/tmp/CYPAT_OSVER; grep "OS Version:" C:/tmp/CYPAT_OSVER > C:/tmp/CYPAT_COND` then checking the hash of C:/tmp/CYPAT_COND. They can be represented with the following struct:
+Operating system versions work differently on different operating systems. On Linux they work checking the kernel version, using `uname -srm > /tmp/CYPAT_COND` then checking the hash of /tmp/CYPAT_COND, if you need the version of the exact linux based operating system and not the kernel, you can use fstate conditions on the appropriate files. On Windows, they check for the operating system version using `systeminfo > C:/tmp/CYPAT_OSVER; {whatever the hell the windows version of grep is} "OS Version:" C:/tmp/CYPAT_OSVER > C:/tmp/CYPAT_COND` then checking the hash of C:/tmp/CYPAT_COND. They can be represented with the following struct:
 
 ```C
 typedef struct

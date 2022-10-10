@@ -85,7 +85,10 @@ typedef struct
 {
     /* Offset at which the name, a null terminated string, starts. */
     int32_t nameOffset;
-    /* Are we checking the state, or existence? */
+    /*  Are we checking the state, or existence?
+    *   True for state
+    *   False for existence
+    */
     bool existsOrState;
     /* File hash */
     uint8_t hash[32];
@@ -132,5 +135,17 @@ typedef struct
 } COND_APPINSTALL_t;
 
 void runInitConds();
+
+void runMetacond(COND_Metacond_t *cond);
+
+void runFstate(COND_fstate_t *cond);
+
+void runCresult(COND_cresult_t *cond);
+
+void runOSVER(COND_OSVER_t *cond);
+
+void runSetting(COND_SETTING_t *cond);
+
+void runAppInstall(COND_APPINSTALL_t *cond);
 
 #endif
