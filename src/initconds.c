@@ -17,8 +17,6 @@ void runInitConds()
         if(header.typeCode == 0xFE)
         {
             COND_Initcond_t cond;
-            log("Condition %zu is an initcondition.", i);
-            log("Condition %zu has %"PRIu16" variables defined.", i, cond.varCount);
             fread(&cond, sizeof(COND_Initcond_t), 1, guideFile);
             COND_var_t *vars = malloc(sizeof(COND_var_t) * cond.varCount);
             fread(vars, sizeof(COND_var_t), cond.varCount, guideFile);
