@@ -30,17 +30,31 @@
 #include "include/eventLoop.h"
 
 #ifdef _WIN32
+
+#include <io.h>
+#define F_OK 0
+#define access _access
+
 #define COMMAND_APPEND " > C:/tmp/CYPAT_COND"
 #define OSVER_COMMAND "systeminfo > C:/tmp/CYPAT_OSVER; grep \"OS Version:\" C:/tmp/CYPAT_OSVER > C:/tmp/CYPAT_COND "
 #define COND_TEMP_FILE_NAME "C:/tmp/CYPAT_COND"
 #elif defined(__unix__)
+
+#include <unistd.h>
+
 #define COMMAND_APPEND " > /tmp/CYPAT_COND"
 #define OSVER_COMMAND "uname -srm > /tmp/CYPAT_COND"
 #define COND_TEMP_FILE_NAME "/tmp/CYPAT_COND"
 #endif
 
 /* Since being cross platform is a pain in the ass let's save this for later. */
-static inline bool fileExists(char *fname);
+static inline bool fileExists(char *fname)
+{
+    /* For once being cross platform isn't that much of a pain in the ass*/
+    if (access(fname, F_OK) == 0)
+        return true;
+    return false;
+}
 
 void runFstate(COND_fstate_t *cond)
 {
