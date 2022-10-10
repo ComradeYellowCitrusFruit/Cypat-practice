@@ -3,7 +3,7 @@
 *   src/metaconds.c
 *   Originally written by Alicia Antó Valencía - https://github.com/ComradeYellowCitrusFruit   
 *
-*   Cyber Competition Suite - A collection of programs for cybersecurity competitions and practices
+*   A collection of programs for cybersecurity competitions and practices
 *   Copyright (C) 2022  Alicia Antó Valencía
 *
 *   This program is free software: you can redistribute it and/or modify

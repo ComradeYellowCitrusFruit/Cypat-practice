@@ -4,7 +4,7 @@
 *   Originally from https://github.com/AlanCxxx/isqrt/blob/master/isqrt.c
 *   Originally written by https://github.com/AlanCxxx
 *
-*   Cyber Competition Suite - A collection of programs for cybersecurity competitions and practices
+*   A collection of programs for cybersecurity competitions and practices
 *   Copyright (C) 2022  Alicia Antó Valencía
 *
 *   This program is free software: you can redistribute it and/or modify
