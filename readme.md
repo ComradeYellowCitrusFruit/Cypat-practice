@@ -19,7 +19,8 @@ We will have to get ourselves an alternative for GMP for use with MSVC or cut ou
 ### Developing and compiling
 
 - A C compiler and standard library for your target platform
-- A CPython compatible interpreter or (preferably GNU) make
+- A CPython compatible interpreter
+- (preferably GNU) make
 - Text editor
 - Git and some internet connection
 
