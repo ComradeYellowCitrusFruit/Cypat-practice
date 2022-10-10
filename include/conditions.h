@@ -36,6 +36,9 @@ typedef struct
 
 typedef struct
 {
+    /*  True for var
+    *   False for score
+    */
     bool varOrScore;
     union
     {

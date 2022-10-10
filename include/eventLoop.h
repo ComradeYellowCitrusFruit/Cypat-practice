@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdint.h>
+#include "conditions.h"
 
 #ifdef _GNUC_
 #define NORETURN __attribute__((noreturn))
@@ -27,7 +28,7 @@ extern char guideFilePath[];
 #elif defined(_WIN32)
 extern char scoreFilePath[];
 extern char scoreLogPath[];
-extern char guideFilePath[] ;
+extern char guideFilePath[];
 #endif
 
 /* Enter the main event loop. Not that complex. */
@@ -36,5 +37,10 @@ NORETURN void enterLoop();
 int mainLoop();
 /* End the loop and exit the program, shutdown the virtual image, and create the launch prevention file. */
 NORETURN void killLoop();
+
+/* Handle conditions */
+void runConds();
+/* Execute an effect */
+void runEffect(COND_effect_t effect);
 
 #endif

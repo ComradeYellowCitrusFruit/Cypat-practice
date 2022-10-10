@@ -135,6 +135,9 @@ typedef struct
 
 typedef struct
 {
+    /*  True for var
+    *   False for score
+    */
     bool varOrScore;
     union
     {
@@ -153,8 +156,6 @@ typedef struct
             *   0x13 Bitwise not
             *   0x14 Bitwise lshift
             *   0x15 Bitwise rshift
-            *   0x16 Bitwise nand
-            *   0x17 Bitwise nor
             *   0x20 To the power of
             *   0x21 To the root of
             */
