@@ -244,9 +244,11 @@ These conditions are meant to work based on OS settings, however, the name is a 
 ```C
 typedef struct
 {
-    /* Offset to the setting string*/
+    /* Setting string size in bytes */
+    uint32_t settingSize;
+    /* Offset to the setting string */
     uint32_t settingOffset;
-    /* Offset to the file name string*/
+    /* Offset to the file name string */
     uint32_t fnameOffset;
     /* Effect */
     COND_effect_t effect;

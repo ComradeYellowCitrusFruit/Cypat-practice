@@ -47,6 +47,8 @@
 #define COND_TEMP_FILE_NAME "/tmp/CYPAT_COND"
 #endif
 
+#define CALCPTR(PTR, ADD) (void*)((uintptr_t)PTR + ADD)
+
 /* Since being cross platform is a pain in the ass let's save this for later. */
 static inline bool fileExists(char *fname)
 {
@@ -58,13 +60,13 @@ static inline bool fileExists(char *fname)
 
 void runFstate(COND_fstate_t *cond)
 {
-    char *fname = (void*)((uintptr_t)cond + cond->nameOffset);
+    char *fname = CALCPTR(cond, cond->nameOffset);
     if(cond->existsOrState)
     {
         uint8_t fstate[32];
         FILE *file = fopen(fname, "r");
         SHA256_F(file, fstate);
-        if(memcmp(fstate, cond->hash, sizeof(uint8_t) * 32) != false)
+        if(memcmp(fstate, cond->hash, sizeof(uint8_t) * 32) == 0)
             runEffect(cond->effect);
         fclose(file);
     }
@@ -78,8 +80,8 @@ void runFstate(COND_fstate_t *cond)
 
 void runCresult(COND_cresult_t *cond)
 {
-    char *cmd = malloc(strlen((void*)((uintptr_t)cond + cond->commandOffset)) + sizeof(COMMAND_APPEND));
-    strcpy(cmd, (void*)((uintptr_t)cond + cond->commandOffset));
+    char *cmd = malloc(strlen(CALCPTR(cond, cond->commandOffset)) + sizeof(COMMAND_APPEND));
+    strcpy(cmd, CALCPTR(cond, cond->commandOffset));
     strcat(cmd, COMMAND_APPEND);
     log("Running command \"%s\"", cmd);
     system(cmd);
