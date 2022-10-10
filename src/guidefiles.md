@@ -167,11 +167,10 @@ typedef struct
 
 typedef struct
 {
-    COND_effect_t effect;
     /* Number of variables */
     uint16_t varCount;
     /* Not actual valid struct code, but whatever */
-    COND_var_t vars[varCount];
+    COND_effect_t effects[varCount];
 } COND_Metacond_t;
 ```
 

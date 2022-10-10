@@ -70,7 +70,6 @@ typedef struct
 
 typedef struct
 {
-    COND_effect_t effect;
     /* Number of variables */
     uint16_t varCount;
 } COND_Metacond_t;
