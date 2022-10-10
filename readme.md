@@ -4,7 +4,7 @@ Title says it all really. Since I am starting cypat at my school, I decided fuck
 
 ## Description of function
 
-Basically, it sets up scoring for an preset up image using a system based on a single "guidefile" for instructions on how to manage it.
+Basically, it sets up scoring for a preset up image using a system based on a single "guidefile" for instructions on how to manage it.
 The program is going to be as efficent and fast as possible, running in the background at all times.
 It should be possible to compile with LLVM, GCC, and MSVC, with make, and python to automate the process. It will be primarily designed for Windows 11, Windows 10, Windows Server, Debian, Ubuntu, and their server varients primarily, with compatibility with Windows 7, Arch and it's derivatives, FreeBSD, OpenBSD, and various common Linux distros, thought the competion only uses Windows 10, Windows Server, Ubuntu, and CISCO (which I don't know shit about to be quite honest).
 For each of these, it should contain an install script to make life easier for whoever is designing an image.
