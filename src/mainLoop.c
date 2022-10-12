@@ -33,5 +33,5 @@
 int mainLoop()
 {
     log("mainLoop()");
-    /* Code goes here */
+    runConds();
 }
