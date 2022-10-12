@@ -121,6 +121,16 @@ typedef struct
 
 typedef struct
 {
+    /* Offset at which the name, a null terminated string, starts. */
+    uint32_t nameOffset;
+    /* Which triggers the outcome, exists or not? */
+    bool existsOrNot;
+    /* Effect */
+    COND_effect_t effect;
+} COND_dir_t;
+
+typedef struct
+{
     /* Offset at which the command, a null terminated string, starts. */
     uint32_t commandOffset;
     /* Result hash */
@@ -162,6 +172,8 @@ void runInitConds();
 void runMetacond(COND_Metacond_t *cond);
 
 void runFstate(COND_fstate_t *cond);
+
+void runDirExists(COND_dir_t *cond);
 
 void runCresult(COND_cresult_t *cond);
 

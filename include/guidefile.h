@@ -103,4 +103,7 @@ extern GF_STATE_t gf_state;
 /* Initializes the guidefile state. */
 void initState();
 
+/* Verify the guidefile */
+bool gf_verify();
+
 #endif

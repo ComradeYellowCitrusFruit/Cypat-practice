@@ -208,6 +208,22 @@ typedef struct
 } COND_fstate_t;
 ```
 
+#### Directory exists condition
+
+Directory exist conditions are simple. They can be represented by the following struct:
+
+```C
+typedef struct
+{
+    /* Offset at which the name, a null terminated string, starts. */
+    uint32_t nameOffset;
+    /* Which triggers the outcome, exists or not? */
+    bool existsOrNot;
+    /* Effect */
+    COND_effect_t effect;
+} COND_dir_t;
+```
+
 #### Command result condition
 
 Command result conditions are exactly like file state conditions, except with a change of struct member names. Command result conditions can be represented with the following struct:
