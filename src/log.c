@@ -68,6 +68,7 @@ void log(char *msg, ...)
     va_end(args);
     return;
 }
+
 void errLog(char *errMsg, int32_t errCode, ...)
 {
     char *trueErrMsg;
@@ -80,5 +81,14 @@ void errLog(char *errMsg, int32_t errCode, ...)
     printDate(errLogFile);
     fprintf(errLogFile, "An error has occured. Error code = %d, errno = %zu, Error message: %s \n", errCode, (size_t)errno, trueErrMsg);
     va_end(args);
+    return;
+}
+
+void finiLog()
+{
+    log("finiLog()");
+    fclose(errLogFile);
+    log("Error log closed. Closing main log");
+    fclose(logFile);
     return;
 }

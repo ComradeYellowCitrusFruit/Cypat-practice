@@ -79,8 +79,11 @@ NORETURN void sleep()
     log("Score file and score log closed.");
 
     /* Kill logging */
-    log(SHUTDOWNCMD" will be called soon, logging is about to be killed.");
+    log("fcloseall() and "SHUTDOWNCMD" will be called soon, logging is about to be killed.");
     finiLog();
+
+    /* Close all files */
+    fcloseall();
 
     /* Kill the image */
     system(SHUTDOWNCMD);
