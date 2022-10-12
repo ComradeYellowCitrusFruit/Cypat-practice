@@ -31,6 +31,7 @@
 #include "include/log.h"
 #include "include/guidefile.h"
 #include "include/errors.h"
+#include "include/kill.h"
 
 extern uint8_t majorVer;
 extern uint8_t minorVer;
@@ -47,14 +48,22 @@ NORETURN void enterLoop()
     guideFile = fopen(guideFilePath, "r");
     log("Guidefile oppened");
     initState(guideFile);
+
     if(gf_state.header.majorVer != majorVer)
     {
         errLog("gf_state.header.majorVer == %"PRIu8", not %"PRIu8, INCOMPATIBLE_MAJOR_VER, gf_state.header.majorVer, majorVer);
     }
-    else if(gf_state.header.minorVer != minorVer)
+    if(gf_state.header.minorVer != minorVer)
     {
         errLog("gf_state.header.minorVer == %"PRIu8", not %"PRIu8, INCOMPATIBLE_MINOR_VER, gf_state.header.minorVer, minorVer);
     }
+
+    if(gf_state.header.majorVer != majorVer || gf_state.header.minorVer != minorVer)
+        disgracefulFatalErr();
+
+    if(!gf_verify())
+        disgracefulFatalErr();
+
     /* Oh boy an infinite loop*/
     while(1)
         if(mainLoop() == 0) break;

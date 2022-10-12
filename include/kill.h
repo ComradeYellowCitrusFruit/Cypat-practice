@@ -1,6 +1,6 @@
 /*
 *
-*   include/log.h   
+*   include/kill.h   
 *   Originally written by Alicia Antó Valencía - https://github.com/ComradeYellowCitrusFruit
 *
 *   A collection of programs for cybersecurity competitions and practices
@@ -20,19 +20,28 @@
 *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-#ifndef LOG_H
-#define LOG_H
+#ifndef PROGRAM_EXIT_H
+#define PROGRAM_EXIT_H
 
-#include <stdint.h>
+#ifdef _GNUC_
+#define NORETURN __attribute__((noreturn))
+#elif defined(_MSC_VER)
+#define NORETURN __declspec(noreturn)
+#endif
 
-extern char *LogPath;
+/* Disgraceful fatal error */
+NORETURN void disgracefulFatalErr();
 
-void initLog();
-/* Log a message, works just like printf. */
-void log(char *msg, ...);
-/* Log an error, logs to a specific file as well as the general log file, it logs errno, the errCode, and the errMsg, which is a string formated just like printf. */
-void errLog(char *errMsg, int32_t errCode, ...);
-/* Kill logging system, close the files */
-void finiLog();
+/* Graceful fatal error */
+NORETURN void gracefulFatalErr();
+
+/* Disgraceful exit, in case of foul play */
+NORETURN void disgracefulExit();
+
+/* Graceful exit, for final scoring */
+NORETURN void gracefulExit();
+
+/* Sleep, creates the sleep file then kills the image */
+NORETURN void sleep();
 
 #endif
