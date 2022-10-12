@@ -1,6 +1,6 @@
 /*
 *
-*   include/crypt/AES.h
+*   src/crypt/AES/counter.c
 *   Originally written by Alicia Antó Valencía - https://github.com/ComradeYellowCitrusFruit
 *
 *   A collection of programs for cybersecurity competitions and practices
@@ -20,33 +20,16 @@
 *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-#ifndef CRYPT_AES_H
-#define CRYPT_AES_H
-
-/* Our implementation of AES-256, using counter mode */
-
-#include <stdio.h>
 #include <stdint.h>
-
-typedef struct
-{
-    uint64_t IV;
-    uint64_t counter;
-} AES_Counter_t;
+#include "include/crypt/rand.h"
+#include "include/crypt/AES.h"
 
 /* Generate a counter, for our purposes */
-void genCounter(AES_Counter_t *buf);
-
-/* Encrypt a file */
-void AES_enc_f(FILE *src, FILE *dest, AES_Counter_t *counter, uint8_t *key);
-
-/* Encrypt some memory */
-void AES_enc_m(void *src, void *dest, AES_Counter_t *counter, size_t size, uint8_t *key);
-
-/* Encrypt a file */
-void AES_dec_f(FILE *src, FILE *dest, AES_Counter_t *counter, uint8_t *key);
-
-/* Encrypt some memory */
-void AES_dec_m(void *src, void *dest, AES_Counter_t *counter, size_t size, uint8_t *key);
-
-#endif
+void genCounter(AES_Counter_t *buf)
+{
+    /* Fully randomize the IV */
+    getRandBytes(&(buf->IV), sizeof(uint64_t));
+    /* Null out the counter */
+    buf->counter = 0;
+    return;
+}
