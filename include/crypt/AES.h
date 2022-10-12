@@ -27,15 +27,20 @@
 
 #include <stdio.h>
 #include <stdint.h>
-#include <stdbool.h>
 
 /* Generate a counter, for our purposes */
 void genCounter(void *buf);
 
 /* Encrypt a file */
-void AES_f(FILE *src, FILE *dest, uint8_t *key);
+void AES_enc_f(FILE *src, FILE *dest, uint8_t *counter, uint8_t *key);
 
 /* Encrypt some memory */
-void AES_m(void *src, uint8_t *dest, size_t size, uint8_t *key);
+void AES_enc_m(void *src, void *dest, uint8_t *counter, size_t size, uint8_t *key);
+
+/* Encrypt a file */
+void AES_dec_f(FILE *src, FILE *dest, uint8_t *counter, uint8_t *key);
+
+/* Encrypt some memory */
+void AES_dec_m(void *src, void *dest, size_t size, uint8_t *counter, uint8_t *key);
 
 #endif
