@@ -29,5 +29,20 @@ SHA256.o: $(cryptsrc)SHA256.c
 AES.o: $(cryptsrc)AES/AES.c $(cryptsrc)AES/counter.c
 	$(cc) $(CFLAGS) -c $^ -o $(bindir)$@
 
-%.o : $(srcdir)%.c
-	$(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $(bindir)$@
+log.o: $(srcdir)log.c
+	$(cc) $(CFLAGS) -c $< -o $(bindir)$@
+
+eventLoop.o: $(srcdir)mainLoop.c $(srcdir)enterloop.c $(srcdir)eventLoop_vars.c 
+	$(cc) $(CFLAGS) -c $^ -o $(bindir)$@
+
+conditions.o: $(srcdir)fstateconds.c $(srcdir)initconds.c $(srcdir)metaconds.c $(srcdir)settingscond.c
+	$(cc) $(CFLAGS) -c $^ -o $(bindir)$@
+
+guidefiles.o: $(srcdir)guidefile.c $(srcdir)gfVerify.c
+	$(cc) $(CFLAGS) -c $^ -o $(bindir)$@
+
+kill.o: $(srcdir)sleep.c
+	$(cc) $(CFLAGS) -c $^ -o $(bindir)$@
+
+isqrt.o: $(srcdir)isqrt.c
+	$(cc) $(CFLAGS) -c $< -o $(bindir)$@
