@@ -20,11 +20,14 @@ objects := enterloop.o eventLoop_vars.o guidefile.o initconds.o log.o mainLoop.o
 DH.o: $(cryptsrc)DH/init.cpp $(cryptsrc)DH/secret.cpp $(cryptsrc)DH/getptr.cpp 
 	$(cxx) $(CXXFLAGS) -c $^ -o $(bindir)$@
 
-rand.o: $(cryptsrc)/rand.c
+rand.o: $(cryptsrc)rand.c
 	$(cc) $(CFLAGS) -c $< -o $(bindir)$@
 
-SHA256.o: $(cryptsrc)/SHA256.c 
+SHA256.o: $(cryptsrc)SHA256.c 
 	$(cc) $(CFLAGS) -c $< -o $(bindir)$@
+
+AES.o: $(cryptsrc)AES/AES.c $(cryptsrc)AES/counter.c
+	$(cc) $(CFLAGS) -c $^ -o $(bindir)$@
 
 %.o : $(srcdir)%.c
 	$(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $(bindir)$@
