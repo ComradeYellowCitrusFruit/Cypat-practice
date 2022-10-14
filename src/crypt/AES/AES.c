@@ -152,6 +152,8 @@ static inline void handleCounter(AES_Counter_t *counter, AES_Counter_t *dest, ui
 {
     uint8_t state[4][4];
     memcpy(state, counter, 16);
+    void *keys = malloc(120 * sizeof(uint32_t));
+    keySchedule(key, keys);
 }
 /* Encrypt a file */
 void AES_enc_f(FILE *src, FILE *dest, AES_Counter_t *counter, uint8_t *key)
@@ -169,8 +171,6 @@ void AES_enc_f(FILE *src, FILE *dest, AES_Counter_t *counter, uint8_t *key)
         fputc(0, dest);
     
     rewind(dest);
-    void *keys = malloc(120 * sizeof(uint32_t));
-    keySchedule(key, keys);
 }
 
 /* Encrypt some memory */

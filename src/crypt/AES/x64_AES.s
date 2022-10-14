@@ -20,6 +20,8 @@
 *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+#ifdef __x86_64__
+
 .section .text
 
 .globl AES
@@ -59,3 +61,5 @@ AES:
     mov %rbp, %rsp
     pop %rbp
     ret
+
+#endif

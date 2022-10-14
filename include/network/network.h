@@ -73,4 +73,10 @@ typedef struct
     uint16_t val;
 } Packet_Desig_t;
 
+typedef struct
+{
+    Packet_Desig_t designator;
+    uint32_t size;
+} Packet_Header_t;
+
 #endif
