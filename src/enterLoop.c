@@ -59,10 +59,10 @@ NORETURN void enterLoop()
     }
 
     if(gf_state.header.majorVer != majorVer || gf_state.header.minorVer != minorVer)
-        disgracefulFatalErr();
+        fatalErr();
 
     if(!gf_verify())
-        disgracefulFatalErr();
+        fatalErr();
 
     /* Oh boy an infinite loop*/
     while(1)

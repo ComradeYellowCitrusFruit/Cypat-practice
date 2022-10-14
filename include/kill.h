@@ -27,11 +27,8 @@
 #define NORETURN __attribute__((noreturn))
 #endif
 
-/* Disgraceful fatal error */
-NORETURN void disgracefulFatalErr();
-
-/* Graceful fatal error */
-NORETURN void gracefulFatalErr();
+/* Fatal error */
+NORETURN void fatalErr();
 
 /* Disgraceful exit, in case of foul play */
 NORETURN void disgracefulExit();
