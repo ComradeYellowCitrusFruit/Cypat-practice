@@ -36,7 +36,7 @@ AES:
     xor %rax, %rax
 
     # Round 1
-    aesenc (%rsi, %rax), %xmm1
+    xorps (%rsi), %xmm1
 
     # Set up loop counter 
     mov $12, %rcx

@@ -169,6 +169,8 @@ void AES_enc_f(FILE *src, FILE *dest, AES_Counter_t *counter, uint8_t *key)
         fputc(0, dest);
     
     rewind(dest);
+    void *keys = malloc(120 * sizeof(uint32_t));
+    keySchedule(key, keys);
 }
 
 /* Encrypt some memory */

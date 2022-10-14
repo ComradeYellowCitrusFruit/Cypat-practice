@@ -26,7 +26,7 @@ rand.o: $(cryptsrc)rand.c
 SHA256.o: $(cryptsrc)SHA256.c 
 	$(cc) $(CFLAGS) -c $< -o $(bindir)$@
 
-AES.o: $(cryptsrc)AES/AES.c $(cryptsrc)AES/counter.c
+AES.o: $(cryptsrc)AES/AES.c $(cryptsrc)AES/counter.c $(cryptsrc)AES/x64_AES.s
 	$(cc) $(CFLAGS) -c $^ -o $(bindir)$@
 
 log.o: $(srcdir)log.c
