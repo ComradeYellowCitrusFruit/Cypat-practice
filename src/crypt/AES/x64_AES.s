@@ -25,6 +25,7 @@
 .section .text
 
 .globl AES
+.globl SUPPORTS_AES
 
 # Optimized AES for x64 with AES instructions
 AES:
@@ -56,6 +57,18 @@ AES:
 
     # Move xmm1 into state
     movups %xmm1, (%rdi)
+
+    # Undo stack frame and return
+    mov %rbp, %rsp
+    pop %rbp
+    ret
+
+SUPPORTS_AES:
+    # Set up stack frame
+    push %rbp
+    mov %rsp, %rbp
+    
+    # Insert code here
 
     # Undo stack frame and return
     mov %rbp, %rsp
