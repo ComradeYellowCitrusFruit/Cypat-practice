@@ -39,6 +39,16 @@ static inline void subBytes(uint8_t *state)
     return;
 }
 
+static inline uint32_t subWord(uint32_t word)
+{
+    uint8_t *ptr = &word;
+    ptr[0] = ptr[0] ^ rotl8(ptr[0], 1) ^ rotl8(ptr[0], 2) ^ rotl8(ptr[0], 3) ^ rotl8(ptr[0], 4);
+    ptr[1] = ptr[1] ^ rotl8(ptr[1], 1) ^ rotl8(ptr[1], 2) ^ rotl8(ptr[1], 3) ^ rotl8(ptr[1], 4);
+    ptr[2] = ptr[2] ^ rotl8(ptr[2], 1) ^ rotl8(ptr[2], 2) ^ rotl8(ptr[2], 3) ^ rotl8(ptr[2], 4);
+    ptr[3] = ptr[3] ^ rotl8(ptr[3], 1) ^ rotl8(ptr[3], 2) ^ rotl8(ptr[3], 3) ^ rotl8(ptr[3], 4);
+    return word;
+}
+
 static inline void shiftRows(uint8_t *state)
 {
     uint8_t astate[4][4];
@@ -97,18 +107,51 @@ static inline void mixColumns(uint8_t *state)
     gmix_column(&(rotState[2][0]));
     gmix_column(&(rotState[3][0]));
 
-    for(int i = 0; i < 4; i++)
+    /* Rotate back to the original position */
+    for(int k = 0; k < 3; k++)
     {
-        for(int j = 0; j < 4; j++)
-            astate[j][i] = rotState[i][j];
+        for(int i = 0; i < 4; i++)
+        {
+            for(int j = 0; j < 4; j++)
+                astate[j][i] = rotState[i][j];
+        }
     }
+
     memcpy(state, astate, 16);
+    return;
+}
+
+static inline uint8_t rcon(int i)
+{
+    uint8_t vals[] = { 1, 2, 4, 8, 0x10, 0x20, 0x40, 0x80, 0x1B, 0x36 };
+    i--;
+    
+    /* I think thats how this works, I'm not sure */
+    return vals[i % 10];
+}
+
+static inline void keySchedule(uint8_t *key, uint8_t *destKey)
+{
+    uint32_t *k = key;
+    uint32_t *words = destKey;
+    for(int i = 0; i < 120; i++)
+    {
+        if(i < 8)
+            words[i] = k[i];
+        else if(i >= 8 && (i % 8 == 0 % 8))
+            words[i] = words[i-8] ^ subWord(rotl32(words[i-1], 8)) ^ (rcon(i/8) << 24);
+        else if(i >= 8 && (i % 8 == 4 % 8))
+            words[i] = words[i-8] ^ subWord(words[i-1]);
+        else
+            words[i] = words[i-8] ^ words[i-1];
+    }
     return;
 }
 
 static inline void handleCounter(AES_Counter_t *counter, AES_Counter_t *dest, uint8_t *key)
 {
     uint8_t state[4][4];
+    memcpy(state, counter, 16);
 }
 /* Encrypt a file */
 void AES_enc_f(FILE *src, FILE *dest, AES_Counter_t *counter, uint8_t *key)
