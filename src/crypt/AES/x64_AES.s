@@ -29,10 +29,6 @@
 
 # Optimized AES for x64 with AES instructions
 AES:
-    # Set up stack frame
-    push %rbp
-    mov %rsp, %rbp
-
     # Move state into xmm1
     movups (%rdi), %xmm1
     # Null rax, our offset register
@@ -58,21 +54,11 @@ AES:
     # Move xmm1 into state
     movups %xmm1, (%rdi)
 
-    # Undo stack frame and return
-    mov %rbp, %rsp
-    pop %rbp
     ret
 
 SUPPORTS_AES:
-    # Set up stack frame
-    push %rbp
-    mov %rsp, %rbp
-    
-    # Insert code here
+    cpuid
 
-    # Undo stack frame and return
-    mov %rbp, %rsp
-    pop %rbp
     ret
 
 #endif

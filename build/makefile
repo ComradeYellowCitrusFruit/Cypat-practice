@@ -9,7 +9,7 @@ cc := gcc
 cxx := g++
 
 # Default, compiler based, compiler args
-CFLAGS := -I$(incdir) -O2 -Wall -pedantic -ansi 
+CFLAGS := -I$(incdir) -O2 -Wall -pedantic -std=gnu89 
 CXXFLAGS := $(CFLAGS)
 
 objects := enterloop.o eventLoop_vars.o guidefile.o initconds.o log.o mainLoop.o start.o
