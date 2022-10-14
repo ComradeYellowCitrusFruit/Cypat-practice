@@ -1,6 +1,6 @@
 /*
 *
-*   include/kill.h   
+*   src/fatalError.c  
 *   Originally written by Alicia Antó Valencía - https://github.com/ComradeYellowCitrusFruit
 *
 *   A collection of programs for cybersecurity competitions and practices
@@ -20,31 +20,23 @@
 *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-#ifndef PROGRAM_EXIT_H
-#define PROGRAM_EXIT_H
-
-#ifdef _GNUC_
-#define NORETURN __attribute__((noreturn))
-#endif
-
-#ifdef __unix__
-#define SLEEPFILENAME "/CYPAT/SLEEP"
-#define SHUTDOWNCMD "shutdown -h now"
-#elif defined(_WIN32)
-#define SLEEPFILENAME "C:/CYPAT/SLEEP"
-#define SHUTDOWNCMD "shutdown -s -f -t 0"
-#endif
+#include <stdint.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include "include/log.h"
+#include "include/kill.h"
 
 /* Fatal error */
-NORETURN void fatalError();
+NORETURN void fatalError()
+{
+    /* For our purposes here, we can't assume anything other than initLog() having been called, so we won't save the score or anything. */
+    /* Kill logging */
+    log("A fatal error has occured. Shutting down and killing the image, gracefully of course.");
+    finiLog();
 
-/* Disgraceful exit, in case of foul play */
-NORETURN void disgracefulExit();
+    /* Close all files */
+    fcloseall();
 
-/* Graceful exit, for final scoring */
-NORETURN void gracefulExit();
-
-/* Sleep, creates the sleep file then kills the image */
-NORETURN void sleep();
-
-#endif
+    /* Kill the image */
+    system(SHUTDOWNCMD);
+}

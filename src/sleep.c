@@ -30,14 +30,6 @@
 #include "include/eventLoop.h"
 #include "include/log.h"
 
-#ifdef __unix__
-#define SLEEPFILENAME "/CYPAT/SLEEP"
-#define SHUTDOWNCMD "shutdown -h now"
-#elif defined(_WIN32)
-#define SLEEPFILENAME "C:/CYPAT/SLEEP"
-#define SHUTDOWNCMD "shutdown -s -f -t 0"
-#endif
-
 /* Sleep, creates the sleep file then kills the image */
 NORETURN void sleep()
 {
