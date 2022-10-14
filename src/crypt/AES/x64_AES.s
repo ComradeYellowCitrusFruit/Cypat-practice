@@ -25,7 +25,6 @@
 .section .text
 
 .globl AES
-.globl AES_xorps
 .globl SUPPORTS_AES
 
 # Optimized AES for x64 with AES instructions
@@ -55,10 +54,6 @@ AES:
     # Move xmm1 into state
     movups %xmm1, (%rdi)
 
-    ret
-
-AES_xorps:
-    xorps (%rsi), (%rdi)
     ret
 
 SUPPORTS_AES:
