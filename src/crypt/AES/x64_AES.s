@@ -57,8 +57,26 @@ AES:
     ret
 
 SUPPORTS_AES:
+    # Save rbx, which is a reserved register in both the Sys V and Microsoft ABIs
+    pushq %rbx
+
+    # Call the proper CPUID function
+    mov $1, %eax
     cpuid
 
+    # Move ecx into eax
+    mov %ecx, %eax
+
+    # Obtain the return code
+
+    # Shift to the proper position so that the AES bit is moved to bit zero
+    shr $25, %eax
+
+    # And eax with 1, limiting the return so that the AES bit is the only bit with any variation and making the return code 1 or 0
+    and $1, %eax
+
+    # Restore rbx and return
+    popq %rbx
     ret
 
 #endif

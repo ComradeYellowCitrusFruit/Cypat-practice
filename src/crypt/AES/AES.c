@@ -29,6 +29,7 @@
 #ifdef __x86_64__
 /* We'd be idiots not to make use of the x64 AES extentions, this function handles that, it is written in a seperate assembly language file */
 __attribute__((sysv_abi)) extern void AES_ASM(void *state, void *expandedKey) asm("AES");
+/* Returns one if true, zero if false */
 extern int supportsAESExtentions() asm("SUPPORTS_AES");
 #endif
 
