@@ -37,16 +37,29 @@ typedef struct
 /* Generate a counter, for our purposes */
 void genCounter(AES_Counter_t *buf);
 
-/* Encrypt a file */
-void AES_enc_f(FILE *src, FILE *dest, AES_Counter_t *counter, uint8_t *key);
+/*  Encrypt or decrypt a file.
+*   The function will in theory work the same if src and dest are the same file with different pointers,
+*   since the position of each is modified, 
+*   data from src is only read from once, 
+*   and data from dest is only written once.
+*   The position of both files is restored at the end of the function
+*   @param *src The source file, considered read only.
+*   @param *dest The destination file, considered read-write, and is where the encrypted data is written.
+*   @param *counter The counter, considered read-write and is treated as volatile, and is modified.
+*   @param *key The key, considered read only.
+*/
+void AES_f(FILE *src, FILE *dest, AES_Counter_t *counter, uint8_t *key);
 
-/* Encrypt some memory */
-void AES_enc_m(void *src, void *dest, AES_Counter_t *counter, size_t size, uint8_t *key);
-
-/* Encrypt a file */
-void AES_dec_f(FILE *src, FILE *dest, AES_Counter_t *counter, uint8_t *key);
-
-/* Encrypt some memory */
-void AES_dec_m(void *src, void *dest, AES_Counter_t *counter, size_t size, uint8_t *key);
+/*  Encrypt or decrypt some memory.
+*   The function will still work if *src and *dest are the same, 
+*   as data from *src is only read from once, 
+*   and data from *dest is only written once.
+*   @param *src The source buffer, considered read only.
+*   @param *dest The destination buffer, considered read-write, and is where the encrypted data is written.
+*   @param *counter The counter, considered read-write and is treated as volatile, and is modified.
+*   @param size The size of the two buffers.
+*   @param *key The key, considered read only.
+*/
+void AES_m(void *src, void *dest, AES_Counter_t *counter, size_t size, uint8_t *key);
 
 #endif
