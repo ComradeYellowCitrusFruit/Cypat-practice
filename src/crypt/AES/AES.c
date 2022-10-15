@@ -152,31 +152,133 @@ static inline void keySchedule(uint8_t *key, uint8_t *destKey)
 
 static inline void handleCounter(AES_Counter_t *counter, AES_Counter_t *dest, uint8_t *key)
 {
-    uint8_t state[4][4];
+    uint8_t state[16];
     memcpy(state, counter, 16);
-    void *keys = malloc(120 * sizeof(uint32_t));
+    uint8_t *keys = malloc(120 * sizeof(uint32_t));
+
+    /* Perform key expansion */
     keySchedule(key, keys);
+
+    #ifdef __x86_64__
+        /* Quick and easy harmless optimization */
+        static int aesOpcodes = supportsAESExtentions();
+        if(aesOpcodes == 1)
+            /* Our optimizations in action */
+            AES_ASM(state, keys);
+        else
+        {
+            /* They don't support AES instructions */
+
+            /* Offset for which key to use */
+            int offset = 0;
+            /* First round */
+            for(int i = 0; i < 16; i++)
+                state[i] ^= keys[i];
+            
+            offset += 16;
+
+            /* Every other round except the last */
+            for(int k = 0; k < 13; k++)
+            {
+                /* Perform all the AES functions */
+                subBytes(state);
+                shiftRows(state);
+                mixColumns(state);
+                /* AddRoundKey, since it's just a simple for loop, it isn't it's own function */
+                for(int i = 0; i < 16; i++)
+                    state[i] ^= keys[i + offset];
+                offset += 16;
+            }
+
+            /* Last round */
+            subBytes(state);
+            shiftRows(state);
+            for(int i = 0; i < 16; i++)
+                state[i] ^= keys[i + offset];
+        }
+    #else
+
+    /* Not x64 */
+
+    /* Offset for which key to use */
+    int offset = 0;
+    /* First round */
+    for(int i = 0; i < 16; i++)
+        state[i] ^= keys[i];
+            
+    offset += 16;
+
+    /* Every other round except the last */
+    for(int k = 0; k < 13; k++)
+    {
+        /* Perform all the AES functions */
+        subBytes(state);
+        shiftRows(state);
+        mixColumns(state);
+        /* AddRoundKey, since it's just a simple for loop, it isn't it's own function */
+        for(int i = 0; i < 16; i++)
+            state[i] ^= keys[i + offset];
+        offset += 16;
+    }
+
+    /* Last round */
+    subBytes(state);
+    shiftRows(state);
+    for(int i = 0; i < 16; i++)
+        state[i] ^= keys[i + offset];
+    #endif
+
+    free(keys);
+    /* Transfer our state to dest */
+    memcpy(state, dest, 16);
+    return;
 }
+
 /* Encrypt a file */
 void AES_enc_f(FILE *src, FILE *dest, AES_Counter_t *counter, uint8_t *key)
-{
+{   
+    rewind(dest);
+
     int C;
-    /* Copy file */
+    /* Number of bytes we've processed, also the byte we're currently proccessing */
+    int cc = 0;
+    AES_Counter_t tmpC;
+    uint8_t *counterBuf = &tmpC;
+    /* Set it to negative one, so that the counter is accurate to the number of counters we've gone through */
+    counter->counter = (uint64_t)-1;
     while((C = fgetc(src)) != EOF)
-        fputc(C, dest);
+    {
+        /* If we need to increment the counter or not */
+        if(cc % 16 == 0)
+        {
+            counter->counter++;
+            handleCounter(counter, &tmpC, key);
+        }
+        fputc(C ^ counterBuf[cc % 16], dest);
+        cc++;
+    }
 
-    /* Add padding */
-    for(int i = 0; i < 16; i++)
-        fputc(0, dest);
-
-    while(ftell(src) % 16)
-        fputc(0, dest);
-    
     rewind(dest);
 }
 
 /* Encrypt some memory */
-void AES_enc_m(void *src, void *dest, AES_Counter_t *counter, size_t size, uint8_t *key);
+void AES_enc_m(void *src, void *dest, AES_Counter_t *counter, size_t size, uint8_t *key)
+{
+    /* Practically identical to AES_enc_f(), except with memory IO instead of file IO, unlike SHA256 */
+    uint8_t *srcbuf = src;
+    uint8_t *destbuf = dest;
+    AES_Counter_t tmpC;
+    uint8_t *counterBuf = &tmpC;
+    for(int i = 0; i < size; i++)
+    {
+        if(i % 16 == 0)
+        {
+            counter->counter++;
+            handleCounter(counter, &tmpC, key);
+        }
+        destbuf[i] = srcbuf[i] ^ counterBuf[i % 16];
+    }
+}
 
 /* Encrypt a file */
 void AES_dec_f(FILE *src, FILE *dest, AES_Counter_t *counter, uint8_t *key);

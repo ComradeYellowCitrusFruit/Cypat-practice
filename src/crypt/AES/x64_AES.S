@@ -38,13 +38,16 @@ AES:
     xorps (%rsi), %xmm1
 
     # Set up loop counter 
-    mov $12, %rcx
-.L1:
+    xor %rcx, %rcx
     # Loop for encryption
-    dec %rcx
+.L1:
+    # Add 16 to our offset
     add $16, %rax
     aesenc (%rsi, %rax), %xmm1
-    cmp $0, %rcx
+    # Increment loop counter
+    inc %rcx
+    # Is the loop over?
+    cmp $12, %rcx
     jne .L1
 
     # Perform last round
