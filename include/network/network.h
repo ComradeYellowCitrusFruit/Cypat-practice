@@ -67,6 +67,9 @@
 
 #define FOUL_PLAY_SEND CALCCODE(FOUL_PLAY, 0xFFFF)
 
+/* Port to connect to */
+#define TCP_PORT 44252
+
 typedef struct
 {
     uint8_t sig;

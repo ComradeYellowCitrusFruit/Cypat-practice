@@ -27,9 +27,6 @@
 #include <stdint.h>
 #include <stdio.h>
 
-/* Port to connect to */
-#define TCP_PORT 44252
-
 /* Unique ID that the server will register to keep track of all the files of the image */
 extern int32_t id;
 

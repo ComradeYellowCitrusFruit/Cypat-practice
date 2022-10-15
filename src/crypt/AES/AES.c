@@ -295,7 +295,7 @@ void AES_f(FILE *src, FILE *dest, AES_Counter_t *counter, uint8_t *key)
 */
 void AES_m(void *src, void *dest, AES_Counter_t *counter, size_t size, uint8_t *key)
 {
-    /* Practically identical to AES_enc_f(), except with memory IO instead of file IO, unlike SHA256 */
+    /* Practically identical to AES_f(), except with memory IO instead of file IO, unlike SHA256_m() and SHA256_f() */
     uint8_t *srcbuf = src;
     uint8_t *destbuf = dest;
     AES_Counter_t tmpC;
