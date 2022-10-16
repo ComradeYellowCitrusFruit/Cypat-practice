@@ -1,10 +1,9 @@
-# Our method of taking arguments
+# Arguments
 
 ## Passing arguments
 
 Unlike a typical program, we can't rely on typical console arguments, however, we will still likely need arguments at some point, so we have to use a static file for them.
 What would be `argv[0]` will not be present in this file, as we will not need it.
-The first line will essentially be `fprintf(${file}, "%d", argc)`, the second line will be typical console arguments.
 Other than that, our arguments will be identical to typical console ones.
 
 ## List of all arguments
