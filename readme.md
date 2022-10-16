@@ -6,7 +6,7 @@ Title says it all really. Since I am starting cypat at my school, I decided fuck
 
 Basically, it sets up scoring for a preset up image using a system based on a single "guidefile" for instructions on how to manage it.
 The program is going to be as efficent and fast as possible, running in the background at all times.
-It should be possible to compile with LLVM, GCC, with make, and python to automate the process. It will be primarily designed for Windows 11, Windows 10, Windows Server, Debian, Ubuntu, and their server varients primarily, with compatibility with Windows 7, Arch and it's derivatives, FreeBSD, OpenBSD, and various common Linux distros, thought the competion only uses Windows 10, Windows Server, Ubuntu, and CISCO (which I don't know shit about to be quite honest).
+It should be possible to compile with LLVM, GCC, with make, and python to automate the process. It will be primarily designed for Windows 11, Windows 10, Windows Server, Debian, Ubuntu, and their server varients primarily, with compatibility with Windows 7, Arch and it's derivatives, [FreeBSD](https://www.freebsd.org/), [OpenBSD](https://www.openbsdfoundation.org/), and various common Linux distros, thought the competion only uses Windows 10, Windows Server, Ubuntu, and CISCO (which I don't know shit about to be quite honest).
 For each of these, it should contain an install script to make life easier for whoever is designing an image.
 In any and all cases, SHA-256 should be used for hashing, unless a reason for using MD5 instead is found, and is completely solid.
 At some point we will need to make a program to write guidefiles.
@@ -16,10 +16,11 @@ At some point we will need to make a program to write guidefiles.
 ### Developing and compiling
 
 - A C compiler and standard library for your target platform
+    - [Gnu MP (GMP)](https://gmplib.org/)
 - Text editor
 - Git and some internet connection
-- A CPython compatible interpreter
-*OR*
+- A [CPython](https://en.wikipedia.org/wiki/CPython) compatible interpreter
+> ***OR***
 - (preferably GNU) make
 
 ### Installing and running
@@ -44,7 +45,7 @@ At some point we will need to make a program to write guidefiles.
     2. Program errors
 - Add in an exit proccess
     1. Trigger for the exit process
-    2. Transmit logs to server specified in guidefile over TCP
+    2. Transmit logs to server specified in guidefile over [TCP](https://en.wikipedia.org/wiki/Transmission_Control_Protocol)
     3. Close the program
     4. Shutdown the image
     5. Add prevention metric
@@ -77,9 +78,10 @@ At some point we will need to make a program to write guidefiles.
     1. Client
     2. Server for later
 - Implement proper cryptography
-    1. Fix the SHA256 segfault
-    2. MD5 incase we ever need quick, not completely secure hashing, most likely for network purposes.
+    1. Fix the [SHA256](https://en.wikipedia.org/wiki/SHA-2) segfault
+    2. [MD5](https://en.wikipedia.org/wiki/MD5) incase we ever need quick, not completely secure hashing, most likely for network purposes.
+
 ### Back burner low priority stuff
 - Cryptography
-    1. Switch to ECDH
-    2. ChaCha as a possible alternative for AES
+    1. Switch to [ECDH](https://en.wikipedia.org/wiki/Elliptic-curve_Diffie%E2%80%93Hellman)
+    2. [ChaCha](https://en.wikipedia.org/wiki/Salsa20#ChaCha_variant) as a possible alternative for [AES](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard)
