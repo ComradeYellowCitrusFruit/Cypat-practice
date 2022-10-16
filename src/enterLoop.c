@@ -49,6 +49,9 @@ NORETURN void enterLoop()
     log("Guidefile oppened");
     initState(guideFile);
 
+    if(!gf_verify())
+        fatalErr();
+
     if(gf_state.header.majorVer != majorVer)
     {
         errLog("gf_state.header.majorVer == %"PRIu8", not %"PRIu8, INCOMPATIBLE_MAJOR_VER, gf_state.header.majorVer, majorVer);
@@ -61,11 +64,7 @@ NORETURN void enterLoop()
     if(gf_state.header.majorVer != majorVer || gf_state.header.minorVer != minorVer)
         fatalErr();
 
-    if(!gf_verify())
-        fatalErr();
-
     /* Oh boy an infinite loop*/
     while(1)
-        if(mainLoop() == 0) break;
-    killLoop();
+        mainLoop();
 }

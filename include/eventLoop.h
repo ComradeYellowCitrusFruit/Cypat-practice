@@ -55,8 +55,6 @@ extern char guideFilePath[];
 NORETURN void enterLoop();
 /* Self explanitory */
 int mainLoop();
-/* End the loop and exit the program, shutdown the virtual image, and create the launch prevention file. */
-NORETURN void killLoop();
 
 /* Handle conditions */
 void runConds();
