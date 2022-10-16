@@ -1,6 +1,6 @@
 # A Simple homemade, homegrown practice program for the Cyberpatriots compettion
 
-Title says it all really. Since I am starting cypat at my school, I decided fuck it, "Why not make my own practice software I could possibly use as my own version of cypat later on?", and so here we are, writing it. Let's just pray copyright isn't an issue for us.
+Title says it all really. Since I was starting [Cyber Patriots](https://www.uscyberpatriot.org/) at my school, I decided fuck it, "Why not make my own practice software I could possibly use as my own version of cypat later on?", and so here we are, writing it. Let's just pray copyright isn't an issue for us.
 
 ## Description of function
 
@@ -8,7 +8,7 @@ Basically, it sets up scoring for a preset up image using a system based on a si
 The program is going to be as efficent and fast as possible, running in the background at all times.
 It should be possible to compile with LLVM, GCC, with make, and python to automate the process. It will be primarily designed for Windows 11, Windows 10, Windows Server, Debian, Ubuntu, and their server varients primarily, with compatibility with Windows 7, Arch and it's derivatives, [FreeBSD](https://www.freebsd.org/), [OpenBSD](https://www.openbsdfoundation.org/), and various common Linux distros, thought the competion only uses Windows 10, Windows Server, Ubuntu, and [CISCO](https://www.cisco.com/c/en/us/products/ios-nx-os-software/index.html) (which I don't know shit about to be quite honest).
 For each of these, it should contain an install script to make life easier for whoever is designing an image.
-In any and all cases, SHA-256 should be used for hashing, unless a reason for using MD5 instead is found, and is completely solid.
+In any and all cases, [SHA-256](https://en.wikipedia.org/wiki/SHA-2) should be used for hashing, unless a reason for using [MD5](https://en.wikipedia.org/wiki/MD5) instead is found, and is completely solid.
 At some point we will need to make a program to write guidefiles.
 
 ## Prerequisites
@@ -78,10 +78,11 @@ At some point we will need to make a program to write guidefiles.
     1. Client
     2. Server for later
 - Implement proper cryptography
-    1. Fix the [SHA256](https://en.wikipedia.org/wiki/SHA-2) segfault
-    2. [MD5](https://en.wikipedia.org/wiki/MD5) incase we ever need quick, not completely secure hashing, most likely for network purposes.
+    1. Fix the SHA256 segfault
+    2. Add MD5 incase we ever need quick, not completely secure hashing, most likely for network purposes.
 
 ### Back burner low priority stuff
+
 - Cryptography
     1. Switch to [ECDH](https://en.wikipedia.org/wiki/Elliptic-curve_Diffie%E2%80%93Hellman)
     2. [ChaCha](https://en.wikipedia.org/wiki/Salsa20#ChaCha_variant) as a possible alternative for [AES](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard)
