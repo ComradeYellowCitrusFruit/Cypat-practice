@@ -15,7 +15,9 @@ From there, it follows standard daemonization process, via `daemonize()`. Then, 
 
 `enterLoop()` starts by checking for the don't boot file, and the sleep file.
 If the sleep file is found, then sleep is flagged and the hash record is loaded.
-Integrity checks are made, if any of them fail, the program is terminated via `fatalErr()`. Then opening the score file, then the score log, it then opens the guidefile. From there, it calls `initState()`, to initalize `gf_state`.
+Integrity checks are made, if any of them fail, the program is terminated via `fatalErr()`. Then opening the score file, then the score log, it then opens the guidefile.
+From there, it calls `initState()`, to initalize `gf_state`.
+It also calls `initPState()` to initalize `state`.
 Versions are checked, and if they don't match up, the program is terminated via `fatalErr()`.
 Any configuration files are loaded and approprate flags are set.
 At this point the start up process is finished, and the infinite loop of `mainLoop()` is started.

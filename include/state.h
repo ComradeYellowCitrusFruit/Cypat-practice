@@ -66,9 +66,9 @@ typedef struct
     #endif
 } PROGRAM_state_t;
 
-PROGRAM_state_t *state;
+extern PROGRAM_state_t state;
 
 /* Initialize the program state */
-void initPState(PROGRAM_state_t *state);
+void initPState();
 
 #endif

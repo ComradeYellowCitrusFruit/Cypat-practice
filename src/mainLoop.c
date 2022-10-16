@@ -28,10 +28,32 @@
 #include <stdlib.h>
 #include "include/eventLoop.h"
 #include "include/log.h"
+#include "include/state.h"
+
+static inline void pause()
+{
+    #ifdef __unix__
+        struct timespec tm;
+        tm.tv_sec = 0;
+        tm.tv_nsec = state.args.pauseTime * 1000000;
+        struct timespec rem;
+        nanosleep(&tm, &rem);
+        while(errno == EINTR)
+        {
+            errno = 0;
+            tm = rem;
+            nanosleep(&tm, &rem);
+        }
+    #elif defined(_WIN32)
+        Sleep(state.args.pauseTime);
+    #endif
+    return;
+}
 
 /* Self explanitory */
 int mainLoop()
 {
     log("mainLoop()");
     runConds();
+    pause();
 }
