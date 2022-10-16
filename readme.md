@@ -61,15 +61,6 @@ At some point we will need to make a program to write guidefiles.
     4. Shutdown the image
     5. Add prevention metric
 - Finish start process
-    1. Initalize logging
-    2. Open necessary files
-    3. Hash any mission critical files
-    4. Call gf_verify()
-    5. Initalize gf_state
-    6. Detect if sleep has occurred
-    7. If it's the first time running
-        1. Register 32 bit unique ID with the server specified in the guidefile
-        2. Create ID file
 - Create proper network capabilities
     1. Client
     2. Server for later
@@ -96,6 +87,7 @@ At some point we will need to make a program to write guidefiles.
         3. FreeBSD/OpenBSD
         4. Misc. Linux distros
 - Create detailed score logging
+- Regex for setting conditions and any other possible uses
 
 ### Low Priority
 
