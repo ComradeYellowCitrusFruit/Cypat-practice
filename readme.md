@@ -79,6 +79,7 @@ At some point we will need to make a program to write guidefiles.
 - Create a server program
 
 ### Medium Priority
+
 - Implement "companion programs"
     1. Guidefile creation program
     2. Score viewer
