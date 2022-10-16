@@ -16,16 +16,17 @@ At some point we will need to make a program to write guidefiles.
 ### Developing and compiling
 
 - A C compiler and standard library for your target platform
-- A CPython compatible interpreter
-- (preferably GNU) make
 - Text editor
 - Git and some internet connection
+- A CPython compatible interpreter
+*OR*
+- (preferably GNU) make
 
 ### Installing and running
 
 - A CPython compatible interpreter
-- A network connection and driver
-- A read-write permanent filesystem and driver
+- A network connection
+- A read-write permanent filesystem
 - Some method of obtaining a guidefile
 
 ## TODOs and shit
@@ -47,11 +48,6 @@ At some point we will need to make a program to write guidefiles.
     3. Close the program
     4. Shutdown the image
     5. Add prevention metric
-- Add in a sleep process
-    1. Log the sleep
-    2. Save the score
-    3. Indicate sleep somewhere
-    4. Shutdown the image
 - Finish start process
     1. Initalize logging
     2. Open necessary files
@@ -65,8 +61,7 @@ At some point we will need to make a program to write guidefiles.
     2. Score viewer
     3. Server program
 - Create build automation
-    1. (GNU) make
-    2. Python
+    1. Python
 - Create install scripts written in Python for cross compatibility
     1. Windows 11/10
     2. Windows Server
@@ -81,11 +76,10 @@ At some point we will need to make a program to write guidefiles.
 - Create proper network capabilities
     1. Client
     2. Server for later
-    3. Diffie-Hellman for session key creation and exchange.
 - Implement proper cryptography
-    1. SHA256 for hashing.
-    2. Diffie-Hellman for session key creation and exchange.
-       - Later on it may be benefitional to switch to ECDH, however regular Diffie-Hellman will suffice
-    3. AES for encryption.
-    4. ChaCha as a possible alternative for AES
-    5. MD5 incase we ever need quick, not completely secure hashing, most likely for network purposes.
+    1. Fix the SHA256 segfault
+    2. MD5 incase we ever need quick, not completely secure hashing, most likely for network purposes.
+### Back burner low priority stuff
+- Cryptography
+    1. Switch to ECDH
+    2. ChaCha as a possible alternative for AES
