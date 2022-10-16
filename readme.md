@@ -43,6 +43,11 @@ At some point we will need to make a program to write guidefiles.
 - Write documention for any design choices, program explainations, etc.
     1. Finish guidefile docs
 - Create/Finish guidefile logic
+- Add in arguments and various modes
+    1. Verbose
+    2. Pause
+    3. Debug
+    4. Anonymous
 - Create image integrity checks
     1. Add in hashing of all the 100% critical files at the start of the program
         1. Any config files we use

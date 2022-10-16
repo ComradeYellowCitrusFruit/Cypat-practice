@@ -15,3 +15,4 @@ There are quite a number of arguments. Probably most useful is `-v` or `--verbos
 3. Debug mode. Short: `-d`. Full: `--debug`, `--debug-mode`. Effects: Enables debug mode
 4. Change pause time. Short: `-p ${duration}`. Full: `--pause ${duration}`. Effects: Changes the duration of the pauses at the end of the main loop, in milliseconds.
 5. Anonymous mode. Short: `-a`. Full: `--anon`, `--anonymous`. Effects: Enables anonymous mode, which tells the program to never trigger login popups, and anonymously log into the server whenever necessary.
+6. Use `alloca()`. Short: `-A`. Full: `--alloca`, `--enable-alloca`. Effects: Allows the program to use `alloca()`, must be used with debug mode.
