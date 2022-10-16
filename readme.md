@@ -23,22 +23,33 @@ At some point we will need to make a program to write guidefiles.
 > ***OR***
 - (preferably GNU) make
 
-### Installing and running
+### Installing
 
 - A CPython compatible interpreter
 - A network connection
 - A read-write permanent filesystem
 - Some method of obtaining a guidefile
 
+### Running
+
+- A network connection
+- A read-write permanent filesystem
+- A guidefile
+
 ## TODOs and shit
 
-- Finish guidefile docs
+### High priority
+
+- Write documention for any design choices, program explainations, etc.
+    1. Finish guidefile docs
 - Create/Finish guidefile logic
 - Create image integrity checks
-    1. Add hashes into guidefiles
-    2. Add in hashing of all the 100% critical files at the start of the program
-    3. Add in checking hashes at the start of every run of the main loop
-    4. Add in checks to see if log files have been deleted
+    1. Add in hashing of all the 100% critical files at the start of the program
+        1. Any config files we use
+        2. Any executables we use
+        3. Hash Record
+    2. Add in checking hashes at the start of every run of the main loop
+    3. Add in checks to see if log files have been deleted
 - Implement pauses at the end of the main loop to avoid excessive CPU consumption
 - Implement error checking
     1. `errno` and standard library errors
@@ -52,15 +63,25 @@ At some point we will need to make a program to write guidefiles.
 - Finish start process
     1. Initalize logging
     2. Open necessary files
-    3. Initalize gf_state
-    4. Detect if sleep has occurred
-    5. If it's the first time running
+    3. Hash any mission critical files
+    4. Call gf_verify()
+    5. Initalize gf_state
+    6. Detect if sleep has occurred
+    7. If it's the first time running
         1. Register 32 bit unique ID with the server specified in the guidefile
         2. Create ID file
+- Create proper network capabilities
+    1. Client
+    2. Server for later
+- Implement proper cryptography
+    1. Fix the SHA256 segfault
+    2. Add MD5 incase we ever need quick, not completely secure hashing, most likely for network purposes.
+- Create a server program
+
+### Medium Priority
 - Implement "companion programs"
     1. Guidefile creation program
     2. Score viewer
-    3. Server program
 - Create build automation
     1. Python
 - Create install scripts written in Python for cross compatibility
@@ -74,15 +95,10 @@ At some point we will need to make a program to write guidefiles.
         3. FreeBSD/OpenBSD
         4. Misc. Linux distros
 - Create detailed score logging
-- Create proper network capabilities
-    1. Client
-    2. Server for later
-- Implement proper cryptography
-    1. Fix the SHA256 segfault
-    2. Add MD5 incase we ever need quick, not completely secure hashing, most likely for network purposes.
 
-### Back burner low priority stuff
+### Low Priority
 
 - Cryptography
     1. Switch to [ECDH](https://en.wikipedia.org/wiki/Elliptic-curve_Diffie%E2%80%93Hellman)
     2. [ChaCha](https://en.wikipedia.org/wiki/Salsa20#ChaCha_variant) as a possible alternative for [AES](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard)
+- Optimization (not including obvious optimizations while writing code)
