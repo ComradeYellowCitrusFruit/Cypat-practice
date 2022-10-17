@@ -1,6 +1,6 @@
 /*
 *
-*   include/integrity.h   
+*   src/integrity.c
 *   Originally written by Alicia Antó Valencía - https://github.com/ComradeYellowCitrusFruit
 *
 *   A collection of programs for cybersecurity competitions and practices
@@ -20,29 +20,37 @@
 *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-#ifndef INTEGRITY_H
-#define INTEGRITY_H
-
 #include <stdio.h>
-#include <stdbool.h>
 #include <stdint.h>
+#include <string.h>
+#include "include/crypt/SHA256.h"
+#include "include/guidefile.h"
+#include "include/integrity.h"
 
-typedef struct
+/* The hash record*/
+FILE *hashRecord;
+/* Pointer to the cache */
+Cache_entry_t *cache;
+/* Size of the cache in bytes */
+size_t cacheSize;
+
+bool checkIntegrity()
 {
-    /* Null terminated C string with a max size of 255 characters. */
-    char Filename[256];
-    uint8_t hash[32];
-} Cache_entry_t;
+    if(!gf_verify())
+        return false;
+    else if(!verifyHashRecord())
+        return false;
+    else
+    {
+        for(size_t i = 0; i < cacheSize/sizeof(Cache_entry_t); i++)
+        {
+            uint8_t hash[32];
+            FILE *tmp = fopen(cache[i].Filename, "r");
+            SHA256_F(tmp, hash);
+            if(memcpy(hash, cache[i].hash, 32 * sizeof(uint8_t)) != 0)
+                return false;
+        }
+    }
+}
 
-extern FILE *hashRecord;
-
-#ifdef __unix__
-#define HASH_RECORD_NAME "/CYPAT/HASH_RECORD"
-#elif defined(_WIN32)
-#define HASH_RECORD_NAME "C:/CYPAT/HASH_RECORD"
-#endif
-
-bool checkIntegrity();
 bool verifyHashRecord();
-
-#endif
