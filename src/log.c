@@ -16,9 +16,6 @@
 
 FILE *logFile;
 FILE *errLogFile;
-/* Fuck it define them both I hate preprocessor directives */
-#define LOGPATH_U "/var/log"
-#define LOGPATH_W "C:/CYPAT_logs" 
 
 #define GENERATE_DATE_SIZE(tm) snprintf(NULL, 0, "%d-%02d-%02d %02d:%02d:%02d: ", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec)
 #define GENERATE_DATE(str, tm) sprintf(str, "%d-%02d-%02d %02d:%02d:%02d: ", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec)
@@ -41,19 +38,14 @@ static inline void printDate(FILE *which)
 void initLog()
 {
     #ifdef _WIN32
-    /* Idk where else to put logs on Windows */
-    CreateDirectory(LOGPATH_W, NULL);
-    LogPath = LOGPATH_W;
-    /* Purely for string concatination shit I swear */
-    #define CORRECTLOGPATH LOGPATH_W
-    #elif defined(__unix__)
-    /* Unix based systems prove themselves better than Windows once again */
-    LogPath = LOGPATH_U;
-    /* Purely for string concatination shit I swear */
-    #define CORRECTLOGPATH LOGPATH_U
+
+    CreateDirectory(LOGPATH, NULL);
+
     #endif
-    logFile = fopen(CORRECTLOGPATH"/CYPAT.log", "a+");
-    errLogFile = fopen(CORRECTLOGPATH"/CYPAT.err.log", "a+");
+
+    logFile = fopen(LOGPATH"/CYPAT.log", "a+");
+    errLogFile = fopen(LOGPATH"/CYPAT.err.log", "a+");
+
     printDate(logFile);
     fprintf(logFile, "Logging initiated.\n");
     return;

@@ -25,7 +25,11 @@
 
 #include <stdint.h>
 
-extern char *LogPath;
+#ifdef __unix__
+#define LOGPATH "/var/log"
+#elif defined(_WIN32)
+#define LOGPATH "C:/CYPAT_logs" 
+#endif
 
 void initLog();
 /* Log a message, works just like printf. */
