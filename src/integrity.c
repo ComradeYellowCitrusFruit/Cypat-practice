@@ -23,6 +23,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <string.h>
+#include <stdlib.h>
 #include "include/crypt/SHA256.h"
 #include "include/guidefile.h"
 #include "include/integrity.h"
@@ -47,10 +48,28 @@ bool checkIntegrity()
             uint8_t hash[32];
             FILE *tmp = fopen(cache[i].Filename, "r");
             SHA256_F(tmp, hash);
-            if(memcpy(hash, cache[i].hash, 32 * sizeof(uint8_t)) != 0)
+            if(memcmp(hash, cache[i].hash, 32 * sizeof(uint8_t)) != 0)
                 return false;
         }
     }
 }
 
-bool verifyHashRecord();
+bool verifyHashRecord()
+{
+    fseek(hashRecord, -32 * sizeof(uint8_t), SEEK_END);
+    size_t recordSize = ftell(hashRecord);
+    void *buf = calloc(recordSize + (32 * sizeof(uint8_t)), sizeof(uint8_t));
+    rewind(hashRecord);
+    fread(buf, sizeof(uint8_t), recordSize, hashRecord);
+    uint8_t hash[32];
+    SHA256_M(buf, recordSize + (32 * sizeof(uint8_t)), hash);
+
+    uint8_t recordedHash[32];
+    fseek(hashRecord, -32 * sizeof(uint8_t), SEEK_END);
+    fread(recordedHash, sizeof(uint8_t), 32, hashRecord);
+    rewind(hashRecord);
+    if(memcmp(hash, recordedHash, 32 * sizeof(uint8_t)) == 0)
+        return true;
+    else
+        return false;
+}
