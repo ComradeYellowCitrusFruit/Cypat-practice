@@ -59,6 +59,8 @@ At some point we will need to make a program to write guidefiles.
 - Implement error checking
     1. `errno` and standard library errors
     2. Program errors
+        1. `state.internalErrno` errors
+        2. Dynamic error handling
 - Add in an exit proccess
     1. Trigger for the exit process
     2. Transmit logs to server specified in guidefile over [TCP](https://en.wikipedia.org/wiki/Transmission_Control_Protocol)
