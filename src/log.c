@@ -13,6 +13,8 @@
 #include <stdint.h>
 #include <inttypes.h>
 #include "include/log.h"
+#include "include/errors.h"
+#include "include/state.h"
 
 FILE *logFile;
 FILE *errLogFile;
@@ -61,7 +63,7 @@ void log(char *msg, ...)
     return;
 }
 
-void errLog(char *errMsg, int32_t errCode, ...)
+void errLog(char *errMsg, uint32_t errCode, ...)
 {
     char *trueErrMsg;
     va_list args;
@@ -69,10 +71,23 @@ void errLog(char *errMsg, int32_t errCode, ...)
     trueErrMsg = malloc(vsnprintf(NULL, 0, errMsg, args));
     vsprintf(trueErrMsg, errMsg, args);
     printDate(logFile);
-    fprintf(logFile, "An error has occured. Error code = %"PRId32", errno = %zu, Error message: %s \n", errCode, (size_t)errno, trueErrMsg);
+    fprintf(logFile, "An error has occured. Error code = %"PRIu32", errno = %zu, Error message: %s \n", errCode, (size_t)errno, trueErrMsg);
     printDate(errLogFile);
-    fprintf(errLogFile, "An error has occured. Error code = %d, errno = %zu, Error message: %s \n", errCode, (size_t)errno, trueErrMsg);
+    fprintf(errLogFile, "An error has occured. Error code = %"PRIu32", errno = %zu, Error message: %s \n", errCode, (size_t)errno, trueErrMsg);
     va_end(args);
+
+    switch(errCode)
+    {
+        case CPU_32BITS:
+            break;
+        case CPU_AES_EXTENSIONS_UNAVALIBLE:
+            break;
+        case CPU_NOT_X86:
+            break;
+        default:
+            state.internalErrno = errCode;
+            break;
+    }
     return;
 }
 
