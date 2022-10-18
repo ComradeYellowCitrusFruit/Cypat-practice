@@ -32,6 +32,8 @@
 #include "include/guidefile.h"
 #include "include/errors.h"
 #include "include/kill.h"
+#include "include/integrity.h"
+#include "include/state.h"
 
 extern uint8_t majorVer;
 extern uint8_t minorVer;
@@ -48,6 +50,10 @@ NORETURN void enterLoop()
     guideFile = fopen(guideFilePath, "r");
     log("Guidefile oppened");
     initState(guideFile);
+
+    genCache();
+    if(state.internalErrno == FILESYSTEM_INVALID_HASH_RECORD)
+        fatalErr();
 
     if(!gf_verify())
         fatalErr();

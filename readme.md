@@ -102,3 +102,4 @@ At some point we will need to make a program to write guidefiles.
     1. Switch to [ECDH](https://en.wikipedia.org/wiki/Elliptic-curve_Diffie%E2%80%93Hellman)
     2. [ChaCha](https://en.wikipedia.org/wiki/Salsa20#ChaCha_variant) as a possible alternative for [AES](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard)
 - Optimization (not including obvious optimizations while writing code)
+- Cryptography and network modules as static libraries while compiling
