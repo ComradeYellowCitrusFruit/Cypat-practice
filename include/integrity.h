@@ -35,6 +35,7 @@ typedef struct
 } Cache_entry_t;
 
 extern FILE *hashRecord;
+extern Cache_entry_t *cache;
 
 #ifdef __unix__
 #define HASH_RECORD_NAME "/CYPAT/HASH_RECORD"
@@ -42,6 +43,7 @@ extern FILE *hashRecord;
 #define HASH_RECORD_NAME "C:/CYPAT/HASH_RECORD"
 #endif
 
+void genCache();
 bool checkIntegrity();
 bool verifyHashRecord();
 

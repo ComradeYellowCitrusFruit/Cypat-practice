@@ -25,12 +25,14 @@
 #include <string.h>
 #include <stdlib.h>
 #include "include/crypt/SHA256.h"
+#include "include/errors.h"
 #include "include/log.h"
 #include "include/guidefile.h"
 #include "include/integrity.h"
 
 #ifdef _WIN32
 
+#include <Windows.h>
 #include <io.h>
 
 #define F_OK 0
@@ -39,6 +41,9 @@
 #elif defined(__unix__)
 
 #include <unistd.h>
+#include <dirent.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 
 #endif
 
@@ -48,6 +53,8 @@ FILE *hashRecord;
 Cache_entry_t *cache;
 /* Size of the cache in bytes */
 size_t cacheSize;
+/* Cache entry count */
+size_t entryCount = 0;
 
 /* Since being cross platform is a pain in the ass let's save this for later. */
 static inline bool fileExists(char *fname)
@@ -56,6 +63,95 @@ static inline bool fileExists(char *fname)
     if (access(fname, F_OK) == 0)
         return true;
     return false;
+}
+
+void genCache()
+{
+    cache = malloc(sizeof(Cache_entry_t));
+    log("genCache()");
+
+    #ifdef __unix__
+    DIR *dp;
+    struct dirent *entry;
+    struct stat statbuf;
+    dp = opendir("/CYPAT");
+    chdir("/CYPAT");
+    /* Continue for each entry in /CYPAT */
+    while((entry = readdir(dp)) != NULL)
+    {
+        stat(entry->d_name,&statbuf);
+        /* entry is a file */
+        if(S_ISREG(statbuf.st_mode))
+        {
+            if(strcmp(entry->d_name, "/CYPAT/GUIDEFILE") == 0)
+                log("Guidefile encountered in genCache(), skipping. ");
+            else
+            {
+                log("Generating cache entry for %s", entry->d_name);
+                /* Open the proper file */
+                FILE *file = fopen(entry->d_name, "r");
+                uint8_t hash[32];
+
+                /* Set the cache variables to the proper values */
+                entryCount++;
+                cacheSize = sizeof(Cache_entry_t) * entryCount;
+
+                /* Reallocate the cache */
+                cache = realloc(cache, cacheSize);
+
+                /* Hash the file */
+                SHA256_F(file, hash);
+
+                /* Set the cache entry up */
+                memcpy(&cache[entryCount-1].hash, hash, 32 * sizeof(uint8_t));
+                strncpy(&cache[entryCount-1].Filename, entry->d_name, 255);
+
+                /* Close the file */
+                fclose(file);
+            }
+        }
+    }
+    #elif defined(_WIN32)
+    /* We'll need this for FindFirstFileA() and FindNextFileA() */
+    WIN32_FIND_DATAA fData;
+    HANDLE h;
+    h = FindFirstFileA("C:/CYPAT/*.*", &fData);
+
+    while(h != INVALID_HANDLE_VALUE)
+    {
+        if(strcmp(fData.cFileName, "C:/CYPAT/GUIDEFILE") == 0)
+            log("Guidefile encountered in genCache(), skipping. ");
+        else
+        {
+            log("Generating cache entry for %s", fData.cFileName);
+            FILE *file = fopen(fData.cFileName, "r");
+            uint8_t hash[32];
+
+            /* Set the cache variables to the proper values */
+            entryCount++;
+            cacheSize = sizeof(Cache_entry_t) * entryCount;
+
+            /* Reallocate the cache */
+            cache = realloc(cache, cacheSize);
+
+            /* Hash the file */
+            SHA256_F(file, hash);
+
+            /* Set the cache entry up */
+            memcpy(&cache[entryCount-1].hash, hash, 32 * sizeof(uint8_t));
+            strncpy(&cache[entryCount-1].Filename, fData.cFileName, 255);
+
+            /* Close the file */
+            fclose(file);
+        }
+
+        FindNextFileA(h, &fData);
+    }
+    #endif
+
+    log("genCache() has finished, cache size is %zu, number of entries is %zu, returning.", cacheSize, entryCount);
+
+    return;
 }
 
 bool checkIntegrity()
