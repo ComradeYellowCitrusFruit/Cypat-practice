@@ -18,7 +18,7 @@
 *
 *   You should have received a copy of the GNU General Public License
 *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
-*/
+*/ 
 
 #ifndef CRYPT_AES_H
 #define CRYPT_AES_H
@@ -33,6 +33,13 @@ typedef struct
     uint64_t IV;
     uint64_t counter;
 } AES_Counter_t;
+
+#ifdef __x86_64__
+/* We'd be idiots not to make use of the x64 AES extentions, this function handles that, it is written in a seperate assembly language file */
+__attribute__((sysv_abi)) extern void AES_ASM(void *state, void *expandedKey) asm("AES");
+/* Returns one if true, zero if false */
+extern int supportsAESExtentions() asm("SUPPORTS_AES");
+#endif
 
 /* Generate a counter, for our purposes */
 void genCounter(AES_Counter_t *buf);
