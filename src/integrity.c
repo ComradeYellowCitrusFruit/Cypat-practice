@@ -70,6 +70,26 @@ void genCache()
     cache = malloc(sizeof(Cache_entry_t));
     log("genCache()");
 
+    if(fileExists(HASH_RECORD_NAME))
+    {
+        log("Hash record exists, loading it into memory now.");
+        hashRecord = fopen(HASH_RECORD_NAME, "r");
+        fseek(hashRecord, -32 * sizeof(uint8_t), SEEK_END);
+        cacheSize = ftell(hashRecord);
+        entryCount = cacheSize/sizeof(Cache_entry_t);
+        fread(cache, sizeof(Cache_entry_t), entryCount, hashRecord);
+        rewind(hashRecord);
+        if(verifyHashRecord())
+        {
+            log("Hash record is valid, and has been loaded into memory as the cache, returning.");
+            return;
+        }
+        else
+        {
+            errLog("Invalid hash record discovered during genCache(), returning.", FILESYSTEM_INVALID_HASH_RECORD);
+            return;
+        }
+    }
     #ifdef __unix__
     DIR *dp;
     struct dirent *entry;

@@ -43,8 +43,11 @@ extern Cache_entry_t *cache;
 #define HASH_RECORD_NAME "C:/CYPAT/HASH_RECORD"
 #endif
 
+/* Generate the cache. */
 void genCache();
+/* Perform an integrity check. */
 bool checkIntegrity();
+/* Verify the hash record's integrity. */
 bool verifyHashRecord();
 
 #endif
