@@ -42,3 +42,10 @@ After that the connection to the server is cut.
 The noboot/don't boot file is created.
 Then, `finiLog()` is called, and then all of the files are closed using `fcloseall()`.
 Finally, the image is then terminated.
+
+## fatalError()
+
+`fatalError()` is very simple.
+It takes a single parameter, a `bool` called `permanant`.
+If `permanant` is true, then the noboot/don't boot file is created.
+The image is terminated.

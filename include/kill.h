@@ -23,9 +23,9 @@
 #ifndef PROGRAM_EXIT_H
 #define PROGRAM_EXIT_H
 
-#ifdef _GNUC_
+#include <stdbool.h>
+
 #define NORETURN __attribute__((noreturn))
-#endif
 
 #ifdef __unix__
 #define SLEEPFILENAME "/CYPAT/SLEEP"
@@ -36,7 +36,7 @@
 #endif
 
 /* Fatal error */
-NORETURN void fatalError();
+NORETURN void fatalError(bool permanant);
 
 /* Disgraceful exit, in case of foul play */
 NORETURN void disgracefulExit();
