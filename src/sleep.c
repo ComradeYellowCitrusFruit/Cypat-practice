@@ -71,6 +71,15 @@ NORETURN void sleep()
     fwrite(gf_state.score, sizeof(int32_t), 1, fscore);
     log("Score saved");
 
+    /* Close a bunch of files */
+    fclose(fsleep);
+    fclose(fscore);
+    fclose(scoreLog);
+    log("Closed the sleep file, the score file, and the score log.");
+
+    /* Create the hash record */
+    createRecord();
+
     /* Kill logging */
     log("fcloseall() and "SHUTDOWNCMD" will be called soon, logging is about to be killed.");
     finiLog();
