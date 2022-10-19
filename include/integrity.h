@@ -45,6 +45,8 @@ extern Cache_entry_t *cache;
 
 /* Generate the cache. */
 void genCache();
+/* Create the hash record */
+void createRecord();
 /* Perform an integrity check. */
 bool checkIntegrity();
 /* Verify the hash record's integrity. */

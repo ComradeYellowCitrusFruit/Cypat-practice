@@ -174,6 +174,38 @@ void genCache()
     return;
 }
 
+/* Create the hash record */
+void createRecord()
+{
+    /* Set the hash to a null default */
+    uint8_t hash[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
+    /* Return, in case the function exists */
+    if(fileExists(HASH_RECORD_NAME))
+        return;
+
+    log("createRecord()");
+
+    /* Create the file */
+    hashRecord = fopen(HASH_RECORD_NAME, "w");
+    log("Hash record created.");
+
+    /* Write the cache and null hash */
+    fwrite(cache, sizeof(Cache_entry_t), entryCount, hashRecord);
+    fwrite(hash, sizeof(uint8_t), 32, hashRecord);
+    log("Cache recorded.");
+
+    /* Calculate the hash and append it to the file in place of the null hash */
+    SHA256_F(hashRecord, hash);
+    fseek(hashRecord, -32, SEEK_END);
+    fwrite(hash, sizeof(uint8_t), 32, hashRecord);
+    log("Hash of the cache calculated and recorded.");
+
+    /* Close the file, because this file is only used during sleep, if this function is generated. */
+    fclose(hashRecord);
+    return;
+}
+
 bool checkIntegrity()
 {
     if(!gf_verify())

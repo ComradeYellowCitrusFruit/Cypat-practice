@@ -7,6 +7,7 @@ A file is hashed, then the hash is checked against the hash in memory, if they a
 This is all assuming it is occuring in `mainLoop()`.
 If it occurs during `enterLoop()`, everything is the same, except `fatalErr()` is triggered, in place of `disgracefulExit()`.
 Each cache entry can be represented with the following C struct:
+
 ```C
 typedef struct
 {

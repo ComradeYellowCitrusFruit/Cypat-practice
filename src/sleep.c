@@ -29,6 +29,7 @@
 #include "include/crypt/SHA256.h"
 #include "include/eventLoop.h"
 #include "include/log.h"
+#include "include/integrity.h"
 
 /* Sleep, creates the sleep file then kills the image */
 NORETURN void sleep()
