@@ -54,7 +54,7 @@ bool gf_verify()
     }
     else
     {
-        errLog("Invalid guidefile detected, returning.", GUIDEFILE_INVALID);
+        errLog("Invalid guidefile detected, returning.", FATAL, GUIDEFILE_INVALID);
         return false;
     }
 }

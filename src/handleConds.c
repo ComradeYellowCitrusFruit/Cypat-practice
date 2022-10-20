@@ -68,7 +68,7 @@ void runConds()
                 runMetacond(CALCPTR(condBuf, sizeof(COND_Header_t)));
                 break;
             default:
-                errLog("Invalid condition detected.", GUIDEFILE_INVALID_CONDITION);
+                errLog("Invalid condition detected.", FATAL, GUIDEFILE_INVALID_CONDITION);
         }
         offset = condH.nextOffset;
         free(condBuf);
