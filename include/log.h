@@ -32,10 +32,22 @@
 #endif
 
 void initLog();
+
 /* Log a message, works just like printf. */
 void log(char *msg, ...);
 /* Log an error, logs to a specific file as well as the general log file, it logs errno, the errCode, and the errMsg, which is a string formated just like printf. */
 void errLog(char *errMsg, uint32_t errCode, ...);
+
+#ifdef NETWORK_GENERAL_DEFINES_H
+/* Log a network log message, logs to a specific file as well as the general log file, it logs packetDesig and msg, acts just like printf for the string formating */
+void netLog(char *msg, Packet_Desig_t packetDesig, ...);
+/* Log a network error message, follows the same rules as netLog(), and logs to the error log file. */
+void netErrLog(char *errMsg, Packet_Desig_t packetDesig, ...);
+#endif
+
+/* Log a message if debug is true, functions like log() otherwise */
+void debugLog(char *msg, ...);
+
 /* Kill logging system, close the files */
 void finiLog();
 
