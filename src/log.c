@@ -18,24 +18,8 @@
 
 FILE *logFile;
 FILE *errLogFile;
-
-#define GENERATE_DATE_SIZE(tm) snprintf(NULL, 0, "%d-%02d-%02d %02d:%02d:%02d: ", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec)
-#define GENERATE_DATE(str, tm) sprintf(str, "%d-%02d-%02d %02d:%02d:%02d: ", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec)
-
-static inline void printDate(FILE *which)
-{
-    /* Get the time and convert it to UTC for obvious reasons. */
-    time_t ltime;
-    time(&ltime);
-    struct tm timeinfo = *gmtime(&ltime);
-    /* Print that shit to the file */
-    char *date = malloc(GENERATE_DATE_SIZE(timeinfo));
-    GENERATE_DATE(date, timeinfo);
-    fprintf(which, date);
-    /* Can't be having memory leaks */
-    free(date);
-    return;
-}
+FILE *debugLogFile;
+FILE *networkLogFile;
 
 void initLog()
 {
@@ -47,6 +31,9 @@ void initLog()
 
     logFile = fopen(LOGPATH"/CYPAT.log", "a+");
     errLogFile = fopen(LOGPATH"/CYPAT.err.log", "a+");
+    if(state.args.debug)
+        debugLogFile = fopen(LOGPATH"/CYPAT.debug.log", "a+");
+    networkLogFile = fopen(LOGPATH"/CYPAT.network.log", "a+");
 
     printDate(logFile);
     fprintf(logFile, "Logging initiated.\n");
@@ -55,26 +42,51 @@ void initLog()
 
 void log(char *msg, ...)
 {
+    /* Get the args together */
     va_list args;
     va_start(args, msg);
-    printDate(logFile);
+
+    /* Get the current time */
+    time_t Time;
+    time(&time);
+    
+    /* Print the log information */
+    fprintf(logFile, "%d %d %zu ", GENERAL, INFORMATIONAL, (size_t)Time);
+
+    /* Print the log message, formated and all. */
     vfprintf(logFile, msg, args);
-    va_end(args);
+    fprintf(logFile, "\n");
     return;
 }
 
-void errLog(char *errMsg, uint32_t errCode, ...)
+/* Log an error, logs to a specific file as well as the general log file, it logs errno, the errCode, and the errMsg, which is a string formated just like printf. */
+void errLog(char *errMsg, int urgency, uint32_t errCode, ...)
 {
-    char *trueErrMsg;
+    /* Set up the args */
     va_list args;
     va_start(args, errCode);
-    trueErrMsg = malloc(vsnprintf(NULL, 0, errMsg, args));
-    vsprintf(trueErrMsg, errMsg, args);
-    printDate(logFile);
-    fprintf(logFile, "An error has occured. Error code = %"PRIu32", errno = %zu, Error message: %s \n", errCode, (size_t)errno, trueErrMsg);
-    printDate(errLogFile);
-    fprintf(errLogFile, "An error has occured. Error code = %"PRIu32", errno = %zu, Error message: %s \n", errCode, (size_t)errno, trueErrMsg);
-    va_end(args);
+
+    /* Get the current time */
+    time_t Time;
+    time(&time);
+
+    /* Print to the main log file */
+
+    /* Print the log information */
+    fprintf(logFile, "%d %d %zu %"PRIu32"x ", ERROR, urgency, (size_t)Time, errCode);
+
+    /* Print the log message, formated and all. */
+    vfprintf(logFile, errMsg, args);
+    fprintf(logFile, "\n");
+
+    /* Print to the error log file */
+
+    /* Print the log information */
+    fprintf(errLogFile, "%d %d %zu %"PRIu32"x ", ERROR, urgency, (size_t)Time, errCode);
+
+    /* Print the log message, formated and all. */
+    vfprintf(errLogFile, errMsg, args);
+    fprintf(errLogFile, "\n");
 
     switch(errCode)
     {
@@ -96,11 +108,31 @@ void debugLog(char *msg, ...)
 {
     if(state.args.debug)
     {
+        /* Get the args together */
         va_list args;
         va_start(args, msg);
-        printDate(logFile);
+
+        /* Get the current time */
+        time_t Time;
+        time(&time);
+    
+        /* Print to the main log file */
+
+        /* Print the log information */
+        fprintf(logFile, "%d %d %zu ", DEBUG, INFORMATIONAL, (size_t)Time);
+
+        /* Print the log message, formated and all. */
         vfprintf(logFile, msg, args);
-        va_end(args);
+        fprintf(logFile, "\n");
+
+        /* Print to the debug log file */
+
+        /* Print the log information */
+        fprintf(debugLogFile, "%d %d %zu ", DEBUG, INFORMATIONAL, (size_t)Time);
+
+        /* Print the log message, formated and all. */
+        vfprintf(debugLogFile, msg, args);
+        fprintf(debugLogFile, "\n");
     }
     return;
 }
