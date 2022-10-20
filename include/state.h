@@ -34,6 +34,9 @@ typedef struct
     uint8_t anon : 1;
     uint8_t pause : 1;
     uint8_t allocaEnabled : 1;
+    uint8_t slow : 1;
+    uint8_t fast : 1;
+    uint8_t experimental : 1;
     uint16_t pauseTime;
 } Args_t;
 

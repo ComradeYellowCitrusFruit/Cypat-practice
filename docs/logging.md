@@ -15,3 +15,20 @@ The error log format is as follows: \
 `[LOG TYPE] [LOG URGENCY] [UNIX TIMESTAMP] {[ERROR CODE] {MESSAGE}}` \
 The netowrk log format is as follows: \
 `[LOG TYPE] [LOG URGENCY] [UNIX TIMESTAMP] {[PACKET DESIGNATOR CODE] [(IF IT'S AN ERROR LOG) ERROR CODE] {MESSAGE}}`
+
+There are 4 log types:
+
+- General, value is 0, function is `log()`
+- Error, value is 1, functions are `errLog()` and `netErrLog()`
+- Network, value is 2, functions are `netLog()`
+- Debug, value is 3, function is `debugLog()`
+
+There are 5 log urgencies:
+
+- Informational, value is 3
+- Warning, value is 2
+- Error, value is 1
+- Live or die/critical, value is 0
+- Fatal, value is -1
+
+For a list of error codes and packet designators, see error.h and network.h respectively.

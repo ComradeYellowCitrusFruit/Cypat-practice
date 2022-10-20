@@ -91,6 +91,20 @@ void errLog(char *errMsg, uint32_t errCode, ...)
     return;
 }
 
+/* Log a message if debug is true, functions like log() otherwise */
+void debugLog(char *msg, ...)
+{
+    if(state.args.debug)
+    {
+        va_list args;
+        va_start(args, msg);
+        printDate(logFile);
+        vfprintf(logFile, msg, args);
+        va_end(args);
+    }
+    return;
+}
+
 void finiLog()
 {
     log("finiLog()");

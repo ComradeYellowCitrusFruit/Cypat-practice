@@ -65,4 +65,9 @@ static inline uint64_t rotr64(uint64_t rot, uint64_t by)
     return (rot >> by) | (rot << (64 - by));
 }
 
+static inline uint8_t nibbleSwap(uint8_t byte)
+{
+    return (byte << 4) | (byte >> 4);
+}
+
 #endif
