@@ -36,7 +36,7 @@
 #endif
 
 /* Fatal error */
-NORETURN void fatalError(bool permanant);
+NORETURN void fatalError(bool perm);
 
 /* Disgraceful exit, in case of foul play */
 NORETURN void disgracefulExit();

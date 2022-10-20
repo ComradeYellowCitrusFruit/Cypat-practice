@@ -46,6 +46,6 @@ Finally, the image is then terminated.
 ## fatalError()
 
 `fatalError()` is very simple.
-It takes a single parameter, a `bool` called `permanant`.
-If `permanant` is true, then the noboot/don't boot file is created.
+It takes a single parameter, a `bool` called `perm`.
+If `perm` is true, then the noboot/don't boot file is created.
 The image is terminated.
