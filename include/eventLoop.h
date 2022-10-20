@@ -27,9 +27,7 @@
 #include <stdint.h>
 #include "conditions.h"
 
-#ifdef _GNUC_
 #define NORETURN __attribute__((noreturn))
-#endif
 
 /* Score file. */
 extern FILE *fscore;

@@ -60,11 +60,11 @@ NORETURN void enterLoop()
 
     if(gf_state.header.majorVer != majorVer)
     {
-        errLog("gf_state.header.majorVer == %"PRIu8", not %"PRIu8, INCOMPATIBLE_MAJOR_VER, gf_state.header.majorVer, majorVer);
+        errLog("gf_state.header.majorVer == %"PRIu8", not %"PRIu8, GENERAL_INCOMPATIBLE_MAJOR_VER, gf_state.header.majorVer, majorVer);
     }
     if(gf_state.header.minorVer != minorVer)
     {
-        errLog("gf_state.header.minorVer == %"PRIu8", not %"PRIu8, INCOMPATIBLE_MINOR_VER, gf_state.header.minorVer, minorVer);
+        errLog("gf_state.header.minorVer == %"PRIu8", not %"PRIu8, GENERAL_INCOMPATIBLE_MINOR_VER, gf_state.header.minorVer, minorVer);
     }
 
     if(gf_state.header.majorVer != majorVer || gf_state.header.minorVer != minorVer)
