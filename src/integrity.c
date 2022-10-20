@@ -86,7 +86,7 @@ void genCache()
         }
         else
         {
-            errLog("Invalid hash record discovered during genCache(), returning.", FILESYSTEM_INVALID_HASH_RECORD);
+            errLog("Invalid hash record discovered during genCache(), returning.", FATAL, FILESYSTEM_INVALID_HASH_RECORD);
             return;
         }
     }
@@ -103,48 +103,9 @@ void genCache()
         /* entry is a file */
         if(S_ISREG(statbuf.st_mode))
         {
-            if(strcmp(entry->d_name, "/CYPAT/GUIDEFILE") == 0)
-                log("Guidefile encountered in genCache(), skipping. ");
-            else
-            {
-                log("Generating cache entry for %s", entry->d_name);
-                /* Open the proper file */
-                FILE *file = fopen(entry->d_name, "r");
-                uint8_t hash[32];
-
-                /* Set the cache variables to the proper values */
-                entryCount++;
-                cacheSize = sizeof(Cache_entry_t) * entryCount;
-
-                /* Reallocate the cache */
-                cache = realloc(cache, cacheSize);
-
-                /* Hash the file */
-                SHA256_F(file, hash);
-
-                /* Set the cache entry up */
-                memcpy(&cache[entryCount-1].hash, hash, 32 * sizeof(uint8_t));
-                strncpy(&cache[entryCount-1].Filename, entry->d_name, 255);
-
-                /* Close the file */
-                fclose(file);
-            }
-        }
-    }
-    #elif defined(_WIN32)
-    /* We'll need this for FindFirstFileA() and FindNextFileA() */
-    WIN32_FIND_DATAA fData;
-    HANDLE h;
-    h = FindFirstFileA("C:/CYPAT/*.*", &fData);
-
-    while(h != INVALID_HANDLE_VALUE)
-    {
-        if(strcmp(fData.cFileName, "C:/CYPAT/GUIDEFILE") == 0)
-            log("Guidefile encountered in genCache(), skipping. ");
-        else
-        {
-            log("Generating cache entry for %s", fData.cFileName);
-            FILE *file = fopen(fData.cFileName, "r");
+            log("Generating cache entry for %s", entry->d_name);
+            /* Open the proper file */
+            FILE *file = fopen(entry->d_name, "r");
             uint8_t hash[32];
 
             /* Set the cache variables to the proper values */
@@ -159,11 +120,40 @@ void genCache()
 
             /* Set the cache entry up */
             memcpy(&cache[entryCount-1].hash, hash, 32 * sizeof(uint8_t));
-            strncpy(&cache[entryCount-1].Filename, fData.cFileName, 255);
+            strncpy(&cache[entryCount-1].Filename, entry->d_name, 255);
 
             /* Close the file */
             fclose(file);
         }
+    }
+    #elif defined(_WIN32)
+    /* We'll need this for FindFirstFileA() and FindNextFileA() */
+    WIN32_FIND_DATAA fData;
+    HANDLE h;
+    h = FindFirstFileA("C:/CYPAT/*.*", &fData);
+
+    while(h != INVALID_HANDLE_VALUE)
+    {
+        log("Generating cache entry for %s", fData.cFileName);
+        FILE *file = fopen(fData.cFileName, "r");
+        uint8_t hash[32];
+
+        /* Set the cache variables to the proper values */
+        entryCount++;
+        cacheSize = sizeof(Cache_entry_t) * entryCount;
+
+        /* Reallocate the cache */
+        cache = realloc(cache, cacheSize);
+
+        /* Hash the file */
+        SHA256_F(file, hash);
+
+        /* Set the cache entry up */
+        memcpy(&cache[entryCount-1].hash, hash, 32 * sizeof(uint8_t));
+        strncpy(&cache[entryCount-1].Filename, fData.cFileName, 255);
+
+        /* Close the file */
+        fclose(file);
 
         FindNextFileA(h, &fData);
     }
