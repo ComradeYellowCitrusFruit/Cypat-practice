@@ -25,6 +25,7 @@
 #include "include/log.h"
 
 #ifdef _WIN32
+
 /* I fucking hate windows */
 #include <Windows.h>
 int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance,
@@ -37,7 +38,9 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance,
     /* And we are done here let's book it. */
     enterLoop();
 }
+
 #elif defined(__unix__)
+
 #include <unistd.h>
 #include <signal.h>
 
@@ -72,14 +75,11 @@ static inline void daemonize()
         close (x);
     }
 }
-#endif
 
 int main()
 {
-    #ifdef __unix__
     /* Daemonize this shit */
     daemonize();
-    #endif
     /* Start logging */
     initLog();
     /* Log this shit */
@@ -87,3 +87,4 @@ int main()
     /* And we are done here let's book it. */
     enterLoop();
 }
+#endif
