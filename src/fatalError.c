@@ -20,18 +20,26 @@
 *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-#include <stdint.h>
+#include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include "include/log.h"
 #include "include/kill.h"
 
 /* Fatal error */
-NORETURN void fatalError()
+NORETURN void fatalError(bool perm)
 {
     /* For our purposes here, we can't assume anything other than initLog() having been called, so we won't save the score or anything. */
+    log("fatalError()");
+
+    if(perm)
+    {
+        FILE *NOBOOT = fopen(NOBOOTFILENAME, "w");
+        fprintf(NOBOOT, NOBOOTSTR);
+        log("NOBOOT file created.");
+    }
+    
     /* Kill logging */
-    log("A fatal error has occured. Shutting down and killing the image, gracefully of course.");
     finiLog();
 
     /* Close all files */

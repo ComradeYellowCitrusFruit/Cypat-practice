@@ -29,11 +29,16 @@
 
 #ifdef __unix__
 #define SLEEPFILENAME "/CYPAT/SLEEP"
+#define NOBOOTFILENAME "/CYPAT/NOBOOT"
 #define SHUTDOWNCMD "shutdown -h now"
 #elif defined(_WIN32)
 #define SLEEPFILENAME "C:/CYPAT/SLEEP"
+#define NOBOOTFILENAME "C:/CYPAT/NOBOOT"
 #define SHUTDOWNCMD "shutdown -s -f -t 0"
 #endif
+
+/* Just to add a little flavor, not necessary at all. */
+#define NOBOOTSTR "AND SALT THE SOIL SO THAT NOTHING SHALL EVER GROW HERE AGAIN."
 
 /* Fatal error */
 NORETURN void fatalError(bool perm);
