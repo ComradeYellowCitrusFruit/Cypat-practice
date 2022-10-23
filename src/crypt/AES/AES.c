@@ -255,8 +255,8 @@ void AES_f(FILE *src, FILE *dest, AES_Counter_t *counter, uint8_t *key)
     int cc = 0;
     AES_Counter_t tmpC;
     uint8_t *counterBuf = &tmpC;
-    /* Set it to negative one, so that the counter is accurate to the number of counters we've gone through */
-    counter->counter = (uint64_t)-1;
+    /* SUbtract one from the counter, so that it is accurate to the number of counters we've gone through, without invalidating it. */
+    counter->counter--;
     while((C = fgetc(src)) != EOF)
     {
         /* If we need to increment the counter or not */
@@ -293,6 +293,8 @@ void AES_m(void *src, void *dest, AES_Counter_t *counter, size_t size, uint8_t *
     uint8_t *destbuf = dest;
     AES_Counter_t tmpC;
     uint8_t *counterBuf = &tmpC;
+    
+    counter->counter--;
     for(int i = 0; i < size; i++)
     {
         if(i % 16 == 0)

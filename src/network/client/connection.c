@@ -32,13 +32,9 @@
 #include <wincrypt.h>
 #include <WinSock2.h>
 
-typedef SOCKET socket_t;
-
 #elif defined(__unix__)
 
 #include <sys/socket.h>
-
-typedef int socket_t;
 
 #endif
 
@@ -177,7 +173,7 @@ int connectionInit(char *ip, bool IPv4)
     finalCalc(exponent, tcme);
     char *STRfcme = getStr(tcme);
 
-    /* TODO: Add password derivation function */
+    /* TODO: Add key derivation function */
     SHA256_M(STRfcme, strlen(STRfcme), AES_KEY);
     netLog("AES key derived from the Diffie-Hellman result.", false, NULL);
 

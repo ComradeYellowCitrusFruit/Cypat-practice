@@ -33,6 +33,7 @@
 #include "include/network/network.h"
 #include "include/crypt/AES.h"
 
+extern bool connected;
 extern uint32_t AES_KEY[32];
 extern socket_t ServerSocket;
 extern AES_Counter_t ServerCounter;
