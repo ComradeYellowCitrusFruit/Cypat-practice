@@ -84,4 +84,24 @@ size_t recvPacket(size_t size, void *addr);
 */
 size_t getPacketSize();
 
+/*  Filter through incoming packets, until one matching the filter is found, then recieve the packet of max size bytes at addr, blocks until a packet matching the filter is found.
+*   @param size Size to truncate the packet to
+*   @param addr Address of the buffer to place the packet
+*   @param desig Designator to use as a filter
+*   @param sig Should the sig be filtered
+*   @param val Should the val be filtered
+*   @return Any error codes that may arise, or the size of the packet.
+*/
+size_t recvFiltered_b(size_t size, void *addr, Packet_Desig_t desig, bool sig, bool val);
+
+/*  recvPacket(), but if the incoming packet doesn't match the filter, -1 is returned.
+*   @param size Size to truncate the packet to
+*   @param addr Address of the buffer to place the packet
+*   @param desig Designator to use as a filter
+*   @param sig Should the sig be filtered
+*   @param val Should the val be filtered
+*   @return Any error codes that may arise, or the size of the packet.
+*/
+size_t recvFiltered_n(size_t size, void *addr, Packet_Desig_t desig, bool sig, bool val);
+
 #endif
