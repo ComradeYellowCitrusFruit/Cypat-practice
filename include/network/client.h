@@ -50,7 +50,7 @@ int connectionInit(char *ip, bool IPv4);
 /*  Kill the connection to the server
 *   @return Any error codes that may arise
 */
-int connectionEnd();
+int connectionFini();
 
 /*  Retrieve unique ID from the server, and set it
 *   @return Any error codes that may arise
