@@ -89,7 +89,7 @@ int sendFile(FILE *file, Packet_Desig_t desig)
     /* Clean up and return */
     free(packet);
     fsetpos(file, &pos);
-    
+    return;
 }
 
 /*  Send size bytes at addr to the server
@@ -98,4 +98,34 @@ int sendFile(FILE *file, Packet_Desig_t desig)
 *   @param desig Packet designator
 *   @return Any error codes that may arise
 */
-int sendBytes(size_t size, void *addr, Packet_Desig_t desig);
+int sendBytes(size_t size, void *addr, Packet_Desig_t desig)
+{
+    /* Get packet size */
+    size_t psize = size + sizeof(Packet_Header_t);
+
+    if(!connected)
+    {
+        netErrLog("Attempt to send packet while not connected to the server.", ERROR, false, NULL, NETWORK_PACKET_SEND_ERR);
+        return NETWORK_PACKET_SEND_ERR;
+    }
+
+    /* Allocate memory for the packet */
+    void *packet = malloc(psize);
+    
+    /* Initalize the packet */
+    Packet_Header_t header;
+    header.designator = desig;
+    header.size = psize;
+    *((Packet_Header_t*)packet) = header;
+    memcpy((void*)((uintptr_t)packet + sizeof(Packet_Header_t)), addr, size);
+
+    /* Encrypt the packet */
+    AES_m(packet, packet, &ServerCounter, psize, AES_KEY);
+
+    /* Send the packet */
+    send(ServerSocket, packet, psize, 0);
+
+    /* Clean up and return */
+    free(packet);
+    return;
+}
