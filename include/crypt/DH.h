@@ -57,4 +57,13 @@ C void genSecret(void *secret);
 /* Combine base and secret and place them in dest */
 C void handleSecret(void *secret, void *dest);
 
+/* Combine secret and CME */
+C void finalCalc(void *secret, void *cme);
+
+/* Get string form of INT */
+C char *getStr(void *INT);
+
+/* Set dest to be str, base 62 as it is the most compact form avalible without raw binary. */
+C void setStr(char *str, void *dest);
+
 #endif

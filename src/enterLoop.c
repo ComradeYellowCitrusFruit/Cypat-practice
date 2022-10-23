@@ -71,6 +71,7 @@ NORETURN void enterLoop()
         fatalError(true);
 
     /* Oh boy an infinite loop*/
+    log("The environment necessary for mainLoop() has been set up.");
     while(1)
         mainLoop();
 }

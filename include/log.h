@@ -52,9 +52,9 @@ void errLog(char *errMsg, int urgency, uint32_t errCode, ...);
 
 #ifdef NETWORK_GENERAL_DEFINES_H
 /* Log a network log message, logs to a specific file as well as the general log file, it logs packetDesig and msg, acts just like printf for the string formating */
-void netLog(char *msg, Packet_Desig_t packetDesig, ...);
+void netLog(char *msg, bool desig, Packet_Desig_t *packetDesig, ...);
 /* Log a network error message, follows the same rules as netLog(), and logs to the error log file. */
-void netErrLog(char *errMsg, int urgency, Packet_Desig_t packetDesig, ...);
+void netErrLog(char *errMsg, int urgency, bool desig, Packet_Desig_t *packetDesig, uint32_t errCode, ...);
 #endif
 
 /* Log a message if debug is true, functions like log() otherwise */

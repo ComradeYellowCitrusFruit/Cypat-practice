@@ -14,7 +14,7 @@ Error logs have their own little internal format for the message, as do network 
 The error log format is as follows: \
 `[LOG TYPE] [LOG URGENCY] [UNIX TIMESTAMP] {[ERROR CODE] {MESSAGE}}` \
 The netowrk log format is as follows: \
-`[LOG TYPE] [LOG URGENCY] [UNIX TIMESTAMP] {[PACKET DESIGNATOR CODE] [(IF IT'S AN ERROR LOG) ERROR CODE] {MESSAGE}}`
+`[LOG TYPE] [LOG URGENCY] [UNIX TIMESTAMP] {(IF NECESSARY)[PACKET DESIGNATOR CODE] [(IF IT'S AN ERROR LOG) ERROR CODE] {MESSAGE}}`
 
 There are 4 log types:
 

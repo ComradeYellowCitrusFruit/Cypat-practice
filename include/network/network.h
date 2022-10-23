@@ -27,7 +27,7 @@
 /* This is a header for general network shit, primarily packet designations */
 
 /*  Packet designation codes
-*   Similarly to error codes, these are standardized, and have meaning, however, they are only 24 bits
+*   Similarly to error codes, these are standardized, and have meaning, however, they are only 24 bits, due to the nature of things the structure holding them is 32 bits in size.
 *
 *   The most significant byte has significance indicating what the packet is for
 *       0x80 - Diffie-Hellman handshake
@@ -43,13 +43,17 @@
 #define UID 0xC0
 #define LOGIN 0xD0
 #define LOG_TRANSFER 0xF0
-#define FOUL_PLAY 0xFF
+#define FOUL_PLAY 0x96
+#define FINI 0xFF
 
 #define CALCCODE(sig, val) (sig << 16 | val)
 
 #define DIFFIE_HELLMAN_INIT CALCCODE(DIFFIE_HELLMAN, 0)
 #define DIFFIE_HELLMAN_CME_EXCHANGE CALCCODE(DIFFIE_HELLMAN, 1)
 #define DIFFIE_HELLMAN_FINI CALCCODE(DIFFIE_HELLMAN, 0xFFFF)
+
+#define IV_SEND CALCCODE(DIFFIE_HELLMAN, 0xF0F0)
+#define IV_AGREE CALCODE(DIFFIE_HELLMAN, 0x0F0F)
 
 #define UID_REQUEST CALCCODE(UID, 0xAAAA)
 #define UID_SEND CALCCODE(UID, 0x5555)
@@ -65,15 +69,36 @@
 #define LOG_TRANSFER_LOG CALCCODE(LOG_TRANSFER, 0xF0)
 #define LOG_TRANSFER_ERRLOG CALCCODE(LOG_TRANSFER, 0xF)
 
+#define FINI_SEND CALCCODE(FINI, 0xFFFF)
+
 #define FOUL_PLAY_SEND CALCCODE(FOUL_PLAY, 0xFFFF)
 
 /* Port to connect to */
 #define TCP_PORT 44252
 
+#ifdef _WIN32
+
+#include <WinSock2.h>
+
+typedef SOCKET socket_t;
+
+#elif defined(__unix__)
+
+typedef int socket_t;
+
+#endif
+
 typedef struct
 {
-    uint8_t sig;
-    uint16_t val;
+    union
+    {
+        struct
+        { 
+            uint8_t sig;
+            uint16_t val;
+        };
+        uint32_t sig_val : 24;
+    };
 } Packet_Desig_t;
 
 typedef struct

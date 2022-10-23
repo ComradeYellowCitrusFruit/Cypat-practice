@@ -23,9 +23,19 @@
 #ifndef NETWORK_CLIENT_FUNCTIONS_H
 #define NETWORK_CLIENT_FUNCTIONS_H
 
+/* Prevent include/network/server.h from being included */
+#define NETWORK_SERVER_FUNCTIONS_H
+
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
+
+#include "include/network/network.h"
+#include "include/crypt/AES.h"
+
+extern uint32_t AES_KEY[32];
+extern socket_t ServerSocket;
+extern AES_Counter_t ServerCounter;
 
 /* Unique ID that the server will register to keep track of all the files of the image */
 extern int32_t id;
@@ -49,15 +59,17 @@ int getID();
 
 /*  Send a file to the server
 *   @param *file File to send to the server
+*   @param desig Packet designator
 *   @return Any error codes that may arise
 */
-int sendFile(FILE *file);
+int sendFile(FILE *file, Packet_Desig_t desig);
 
 /*  Send size bytes at addr to the server
 *   @param size Bytes to send
 *   @param addr Address to retrieve these bytes from
+*   @param desig Packet designator
 *   @return Any error codes that may arise
 */
-int sendBytes(size_t size, void *addr);
+int sendBytes(size_t size, void *addr, Packet_Desig_t desig);
 
 #endif

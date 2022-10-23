@@ -36,7 +36,7 @@ C
 /* Generate a valid secret int */
 C void genSecret(void *secret)
 {
-    MPZ *Msecret;
+    MPZ *Msecret = (MPZ*)secret;
     /* Set it to be null, just to be safe. */
     Msecret->mpz_c = 0;
     /* Fill the number with random data, this method also works to fill it with any data to big to fit in a smaller int, in case we need to */
@@ -48,8 +48,8 @@ C void genSecret(void *secret)
 /* Combine base and secret and place them in dest */
 C void handleSecret(void *secret, void *dest)
 {
-    MPZ *Msecret = secret;
-    MPZ *Mdest = dest;
+    MPZ *Msecret = (MPZ*)secret;
+    MPZ *Mdest = (MPZ*)dest;
     MPZ gen;
     gen.mpz_c = RFC_GENERATOR;
     /* How nice of the GNU people to make one function for this */
