@@ -72,4 +72,16 @@ int sendFile(FILE *file, Packet_Desig_t desig);
 */
 int sendBytes(size_t size, void *addr, Packet_Desig_t desig);
 
+/*  Recieve a packet of max size bytes at addr, blocking.
+*   @param size Size to truncate the packet to
+*   @param addr Address of the buffer to place the packet
+*   @return Any error codes that may arise, or the size of the packet.
+*/
+size_t recvPacket(size_t size, void *addr);
+
+/*  Get the size of the incoming packet, blocking.
+*   @return The size of the incoming packet or any error codes that may arise
+*/
+size_t getPacketSize();
+
 #endif
