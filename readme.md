@@ -36,7 +36,7 @@ At some point we will need to make a program to write guidefiles.
 - A read-write permanent filesystem
 - A guidefile
 
-## TODOs and shit
+## TODOs
 
 ### High priority
 
@@ -48,6 +48,9 @@ At some point we will need to make a program to write guidefiles.
     2. Pause
     3. Debug
     4. Anonymous
+    5. Experimental
+    6. Slow
+    7. Fast
 - Create image integrity checks
     1. Add in hashing of all the 100% critical files at the start of the program
         1. Any config files we use
@@ -72,9 +75,12 @@ At some point we will need to make a program to write guidefiles.
     1. Client
     2. Server for later
 - Implement proper cryptography
-    1. Fix the SHA256 segfault
-    2. Add MD5 incase we ever need quick, not completely secure hashing, most likely for network purposes.
-- Create a server program
+    1. Add in key derivation functions
+        1. Argon2
+        2. Lyra2
+    2. Fix the SHA256 segfault
+    3. Add MD5 incase we ever need quick, not completely secure hashing, most likely for network purposes.
+- Create a server program, containing some of the code from the image management program
 
 ### Medium Priority
 

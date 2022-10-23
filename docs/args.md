@@ -19,3 +19,4 @@ There are quite a number of arguments. Probably most useful is `-v` or `--verbos
 7. Slow mode. Short: `-s`. Full: `--slow`, `--slow-mode`. Effects: Enables slow mode, which tells the program that it can function more securely and with more anti-cheating precautions, implied with the use of debug mode.
 8. Fast mode. Short: `-f`. Full: `--fast`, `--fast-mode`. Effects: Enables fast mode, which tells the program that it can use more optimizations, and experimental ones as well. Dissables slow mode.
 9. Experimental mode. Short: `-e`. Full: `--experimental`, `--experimental-mode`. Effects: Enables experimental features, implies use of `alloca()` without debug mode.
+10. Change the primary key derivation function. Short: `-k${function}`, `-kdf${function}`. FULL: `--key-derivation-function=${function}`. Changes the key derivation function the program will atempt to use, which will be limited by what the server wants. Options are Argon2, and Lyra2, default: Argon2.
