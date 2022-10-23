@@ -41,8 +41,11 @@ conditions.o: $(srcdir)fstateconds.c $(srcdir)initconds.c $(srcdir)metaconds.c $
 guidefiles.o: $(srcdir)guidefile.c $(srcdir)gfVerify.c
 	$(cc) $(CFLAGS) -c $^ -o $(bindir)$@
 
-kill.o: $(srcdir)sleep.c
+kill.o: $(srcdir)sleep.c $(srcdir)fatalError.c
 	$(cc) $(CFLAGS) -c $^ -o $(bindir)$@
 
 isqrt.o: $(srcdir)isqrt.c
 	$(cc) $(CFLAGS) -c $< -o $(bindir)$@
+
+client.o: $(srcdir)network/client/connection.c $(srcdir)network/client/out.c
+	$(cc) $(CFLAGS) -c $^ -o $(bindir)$@
